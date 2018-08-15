@@ -1,5 +1,3 @@
-'use strict';
-
 const RIGHT_ARROW = 37;
 const LEFT_ARROW = 39;
 
