@@ -1,29 +1,15 @@
-
-export const userState = {
-  response: [
-    {
-      result: true,
-      time: 20
-    },
-    {
-      result: true,
-      time: 40
-    },
-    {
-      result: false,
-      time: 20
-    },
-  ],
-  lives: 3
-};
-
-export const calculateScore = (responseArr, livesRemain) => {
+export const calculateScore = (responseArr, lives) => {
+  if (!Array.isArray(responseArr)) {
+    throw new Error(`responseArr should be Array`);
+  }
+  if (typeof lives !== `number`) {
+    throw new Error(`lives should be of type number`);
+  }
+  if (lives < 0) {
+    throw new Error(`lives should not be negative value`);
+  }
 
   let totalScore = 0;
-  const userNewState = Object.assign({}, userState);
-
-  userNewState.response = responseArr;
-  userNewState.lives = livesRemain;
 
   responseArr.forEach((response) => {
     if (response.result) {
