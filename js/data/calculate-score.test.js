@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {calculateScore} from '../calculateScore.js';
+import {calculateScore} from '../calculate-score.js';
 
 describe(`calculateScore`, () => {
   it(`should return -1 when responses quantity less 10`, () => {

@@ -2,6 +2,8 @@ import {getElementFromTemplate} from './util.js';
 import selectSlide from './select-slide.js';
 import gameGenre, {gameSubmit} from './game-genre.js';
 import newGame from "./new-game.js";
+import {setTimer, newGameState} from "./change-game-state.js";
+import failTime from './fail-time.js';
 
 const template = `
 <section class="welcome">
@@ -19,9 +21,16 @@ const template = `
 const element = getElementFromTemplate(template);
 
 const welcomeButton = element.querySelector(`.welcome__button`);
-welcomeButton.addEventListener(`click`, () => {
+welcomeButton.addEventListener(`click`, (oldTimer) => {
   selectSlide(gameGenre);
   newGame();
+  clearInterval(oldTimer);
+  setTimer(newGameState.time, () => {
+    selectSlide(failTime);
+    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
+      selectSlide(element);
+    });
+  });
   gameSubmit.disabled = true;
   if (document.querySelectorAll(`.track__button--pause`).length) {
     document.querySelector(`.track__button--pause`).classList.add(`track__button--play`);

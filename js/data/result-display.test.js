@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {resultDisplay} from '../resultDisplay.js';
+import {resultDisplay} from '../result-display.js';
 
 describe(`resultDisplay`, () => {
   it(`should return negative response because time end`, () => {
