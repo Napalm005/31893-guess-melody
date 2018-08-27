@@ -21,10 +21,9 @@ const template = `
 const element = getElementFromTemplate(template);
 
 const welcomeButton = element.querySelector(`.welcome__button`);
-welcomeButton.addEventListener(`click`, (oldTimer) => {
+welcomeButton.addEventListener(`click`, () => {
   selectSlide(gameGenre);
   newGame();
-  clearInterval(oldTimer);
   setTimer(newGameState.time, () => {
     selectSlide(failTime);
     document.querySelector(`.result__replay`).addEventListener(`click`, () => {

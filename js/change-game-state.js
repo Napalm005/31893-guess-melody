@@ -17,7 +17,7 @@ export const changelives = (lives) => {
   return newGameState;
 };
 
-let timerId;
+
 export const setTimer = (time, cb) => {
   if (typeof time !== `number`) {
     throw new Error(`Time should be of type number`);
@@ -26,19 +26,15 @@ export const setTimer = (time, cb) => {
     throw new Error(`Time should not be negative value`);
   }
 
-  clearInterval(timerId);
-
   let minutes;
   let seconds;
   let timeMins = document.querySelector(`.timer__mins`);
   let timeSecs = document.querySelector(`.timer__secs`);
   let timer = time;
-  timerId = setInterval(function () {
-    minutes = parseInt(timer / 60 / 1000, 10);
-    seconds = parseInt(timer / 1000 % 60, 10);
 
-    minutes = minutes < 10 ? `0` + minutes : minutes;
-    seconds = seconds < 10 ? `0` + seconds : seconds;
+  let updateClock = () => {
+    minutes = (`0` + parseInt(timer / 60 / 1000, 10)).slice(-2);
+    seconds = (`0` + parseInt(timer / 1000 % 60, 10)).slice(-2);
 
     timeMins.textContent = minutes;
     timeSecs.textContent = seconds;
@@ -46,8 +42,11 @@ export const setTimer = (time, cb) => {
     timer -= 1000;
     newGameState.time = timer;
     if (timer === 0) {
-      cb(timerId);
+      clearInterval(timerId);
+      cb();
     }
     return newGameState;
-  }, 1000);
+  };
+  updateClock();
+  let timerId = setInterval(updateClock, 1000);
 };
