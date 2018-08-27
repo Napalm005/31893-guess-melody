@@ -2,7 +2,7 @@ import {getElementFromTemplate} from './util.js';
 import selectSlide from './select-slide.js';
 import gameGenre, {gameSubmit} from './game-genre.js';
 import newGame from "./new-game.js";
-import {setTimer, newGameState} from "./change-game-state.js";
+import {setTimer, INITIAL_GAME} from "./change-game-state.js";
 import failTime from './fail-time.js';
 
 const template = `
@@ -24,7 +24,7 @@ const welcomeButton = element.querySelector(`.welcome__button`);
 welcomeButton.addEventListener(`click`, () => {
   selectSlide(gameGenre);
   newGame();
-  setTimer(newGameState.time, () => {
+  setTimer(INITIAL_GAME.time, () => {
     selectSlide(failTime);
     document.querySelector(`.result__replay`).addEventListener(`click`, () => {
       selectSlide(element);

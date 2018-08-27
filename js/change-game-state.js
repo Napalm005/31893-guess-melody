@@ -1,4 +1,4 @@
-const INITIAL_GAME = Object.freeze({
+export const INITIAL_GAME = Object.freeze({
   scores: 0,
   lives: 3,
   time: 1000 * 60 * 5

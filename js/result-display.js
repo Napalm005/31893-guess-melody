@@ -1,3 +1,5 @@
+import {declOfNum} from './util.js';
+
 export const resultDisplay = (usersResuts, userResult) => {
   let response = ``;
 
@@ -13,7 +15,8 @@ export const resultDisplay = (usersResuts, userResult) => {
     });
     const userIndex = array.indexOf(userResult.scores);
     let successPercent = userIndex === 0 ? 0 : (userIndex) / array.length * 100;
-    response = `Вы заняли ${array.length - userIndex} место из ${array.length} игроков. Это лучше, чем у ${Math.round(successPercent)}% игроков`;
+    let number = declOfNum(array.length, [`игрока`, `игроков`, `игроков`]);
+    response = `Вы заняли ${array.length - userIndex} место из ${array.length} ${number}. Это лучше, чем у ${Math.round(successPercent)}% игроков`;
   }
 
   return response;
