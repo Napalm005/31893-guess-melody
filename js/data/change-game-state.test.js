@@ -15,7 +15,11 @@ describe(`Check lives changer`, () => {
   });
 
   it(`should not allow set non number value`, () => {
-    assert.throws(() => changelives([]).lives, /Lives should be of type number/);
+    assert.throws(() => changelives([]), /Lives should be of type number/);
+    assert.throws(() => changelives({}), /Lives should be of type number/);
+    assert.throws(() => changelives(`1`), /Lives should be of type number/);
+    assert.throws(() => changelives(null), /Lives should be of type number/);
+    assert.throws(() => changelives(undefined), /Lives should be of type number/);
   });
 });
 
@@ -31,6 +35,10 @@ describe(`Check time changer`, () => {
   });
   it(`should not allow set non number value`, () => {
     assert.throws(() => setTimer([]), /Time should be of type number/);
+    assert.throws(() => setTimer({}), /Time should be of type number/);
+    assert.throws(() => setTimer(`1`), /Time should be of type number/);
+    assert.throws(() => setTimer(null), /Time should be of type number/);
+    assert.throws(() => setTimer(undefined), /Time should be of type number/);
   });
 });
 

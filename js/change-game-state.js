@@ -50,3 +50,9 @@ export const setTimer = (time, cb) => {
   updateClock();
   let timerId = setInterval(updateClock, 1000);
 };
+
+export const resetGame = (currentState, initState) => {
+  currentState.scores = initState.scores;
+  currentState.lives = initState.lives;
+  currentState.time = initState.time;
+};
