@@ -4,6 +4,7 @@ import resultSuccess from './result-success.js';
 import failTries from './fail-tries.js';
 import failTime from './fail-time.js';
 import welcome from "./welcome.js";
+import {INITIAL_GAME, newGameState, resetGame} from './change-game-state.js';
 
 const template = `
 <section class="game game--artist">
@@ -72,6 +73,7 @@ gameArtist.addEventListener(`click`, (e) => {
   if (e.target.className === `artist__picture`) {
     selectSlide(getRandomElFromArray([resultSuccess, failTries, failTime]));
     document.querySelector(`.result__replay`).addEventListener(`click`, () => {
+      resetGame(newGameState, INITIAL_GAME);
       selectSlide(welcome);
     });
   }
