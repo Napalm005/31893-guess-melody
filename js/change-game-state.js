@@ -1,8 +1,14 @@
 import {INITIAL_GAME} from './game-data.js';
+import failTime from "./fail-time";
+import selectSlide from "./select-slide";
+import failTries from "./fail-tries";
+import resultSuccess from "./result-success";
+import welcome from "./welcome";
+
 
 export const newGameState = Object.assign({}, INITIAL_GAME);
 
-export const changelives = (lives) => {
+export const changeLives = (lives) => {
   if (typeof lives !== `number`) {
     throw new Error(`Lives should be of type number`);
   }
@@ -13,6 +19,16 @@ export const changelives = (lives) => {
   return newGameState;
 };
 
+export const changeLevel = (state) => {
+  if (typeof state.level !== `number`) {
+    throw new Error(`Lives should be of type number`);
+  }
+  if (state.level < 0) {
+    throw new Error(`Lives should not be negative value`);
+  }
+  state.level++;
+  return newGameState;
+};
 
 export const setTimer = (time, cb) => {
   if (typeof time !== `number`) {
@@ -51,4 +67,27 @@ export const resetGame = (currentState, initState) => {
   currentState.scores = initState.scores;
   currentState.lives = initState.lives;
   currentState.time = initState.time;
+};
+
+export const isLoose = (currentState) => {
+  if (currentState.lives === 0) {
+    selectSlide(failTries);
+    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
+      resetGame(newGameState, INITIAL_GAME);
+      selectSlide(welcome);
+    });
+  } else if (currentState.time === 0) {
+    selectSlide(failTime);
+    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
+      resetGame(newGameState, INITIAL_GAME);
+      selectSlide(welcome);
+    });
+  } else if (currentState.level > 5) {
+    selectSlide(resultSuccess);
+    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
+      resetGame(newGameState, INITIAL_GAME);
+      selectSlide(welcome);
+    });
+  }
+
 };

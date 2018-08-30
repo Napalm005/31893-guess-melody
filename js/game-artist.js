@@ -1,14 +1,12 @@
-import {getElementFromTemplate, getRandomElFromArray} from './util.js';
-import selectSlide from "./select-slide";
-import resultSuccess from './result-success.js';
-import failTries from './fail-tries.js';
-import failTime from './fail-time.js';
-import welcome from "./welcome.js";
-import {newGameState, resetGame} from './change-game-state.js';
-import {INITIAL_GAME, levels} from './game-data.js';
+import {getElementFromTemplate} from './util.js';
+// import selectSlide from "./select-slide";
+import {newGameState, isLoose} from './change-game-state.js';
+import {levels} from './game-data.js';
 import header from "./header.js";
+import {changeLevel} from "./change-game-state";
+import {screen} from './screen';
 
-const gameScreen = (state, levelsArr) => `
+const screenArtist = (state, levelsArr) => `
 <section class="game__screen">
   <h2 class="game__title">Кто исполняет эту песню?</h2>
   <div class="game__track">
@@ -30,8 +28,8 @@ const gameScreen = (state, levelsArr) => `
 
 const template = `
 <section class="game game--artist">
-  ${header(INITIAL_GAME)}
-  ${gameScreen(INITIAL_GAME, levels)}
+  ${header(newGameState)}
+  ${screenArtist(newGameState, levels)}
 </section>`;
 
 const element = getElementFromTemplate(template);
@@ -45,11 +43,9 @@ trackButton.addEventListener(`click`, () => {
 const gameArtist = element.querySelector(`.game__artist`);
 gameArtist.addEventListener(`click`, (e) => {
   if (e.target.className === `artist__picture`) {
-    selectSlide(getRandomElFromArray([resultSuccess, failTries, failTime]));
-    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
-      resetGame(newGameState, INITIAL_GAME);
-      selectSlide(welcome);
-    });
+    changeLevel(newGameState);
+    isLoose(newGameState);
+    screen(newGameState, levels);
   }
 });
 

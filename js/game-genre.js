@@ -1,11 +1,11 @@
 import {getElementFromTemplate} from './util.js';
-import selectSlide from "./select-slide.js";
-import gameArtist from "./game-artist.js";
 import newGame from "./new-game.js";
 import header from "./header.js";
-import {INITIAL_GAME, levels} from './game-data.js';
+import {levels} from './game-data.js';
+import {changeLevel, isLoose, newGameState} from './change-game-state';
+import {screen} from './screen';
 
-const screen = (state, levelsArr) => `
+const screenGenre = (state, levelsArr) => `
 <section class="game__screen">
   <h2 class="game__title">Выберите ${levelsArr[state.level].genre} треки</h2>
   <form class="game__tracks">
@@ -26,15 +26,18 @@ const screen = (state, levelsArr) => `
 
 const template = `
 <section class="game game--genre">
-  ${header(INITIAL_GAME)}
-  ${screen(INITIAL_GAME, levels)}
+  ${header(newGameState)}
+  ${screenGenre(newGameState, levels)}
 </section>`;
 
 const element = getElementFromTemplate(template);
 
 export const gameSubmit = element.querySelector(`.game__submit`);
-gameSubmit.addEventListener(`click`, () => {
-  selectSlide(gameArtist);
+gameSubmit.addEventListener(`click`, (e) => {
+  e.preventDefault();
+  changeLevel(newGameState);
+  isLoose(newGameState);
+  screen(newGameState, levels);
   gameSubmit.disabled = true;
   newGame();
 });
@@ -48,22 +51,23 @@ const isChecked = () => {
   }
 };
 
-const trackButton = element.querySelectorAll(`.track__button`);
-Array.from(trackButton).forEach((item) => {
-  item.addEventListener(`click`, () => {
-    if (item.classList.contains(`track__button--play`)) {
+const gameTracks = element.querySelector(`.game__tracks`);
+gameTracks.addEventListener(`click`, (e) => {
+  if (e.target.classList.contains(`track__button`)) {
+    if (e.target.classList.contains(`track__button--play`)) {
       if (document.querySelectorAll(`.track__button--pause`).length) {
         document.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
         document.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
       }
-      item.classList.remove(`track__button--play`);
-      item.classList.add(`track__button--pause`);
+      e.target.classList.remove(`track__button--play`);
+      e.target.classList.add(`track__button--pause`);
     } else {
-      item.classList.remove(`track__button--pause`);
-      item.classList.add(`track__button--play`);
+      e.target.classList.remove(`track__button--pause`);
+      e.target.classList.add(`track__button--play`);
     }
+  } else if (e.target.classList.contains(`game__input`)) {
     isChecked();
-  });
+  }
 });
 
 export default element;
