@@ -1,8 +1,4 @@
-export const INITIAL_GAME = Object.freeze({
-  scores: 0,
-  lives: 3,
-  time: 1000 * 60 * 5
-});
+import {INITIAL_GAME} from './game-data.js';
 
 export const newGameState = Object.assign({}, INITIAL_GAME);
 

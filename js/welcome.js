@@ -2,7 +2,8 @@ import {getElementFromTemplate} from './util.js';
 import selectSlide from './select-slide.js';
 import gameGenre, {gameSubmit} from './game-genre.js';
 import newGame from "./new-game.js";
-import {setTimer, INITIAL_GAME} from "./change-game-state.js";
+import {setTimer} from "./change-game-state.js";
+import {INITIAL_GAME} from "./game-data.js";
 import failTime from './fail-time.js';
 
 const template = `

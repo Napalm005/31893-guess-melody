@@ -1,6 +1,7 @@
 import selectSlide from "./select-slide";
 import welcome from "./welcome.js";
-import {INITIAL_GAME, newGameState, resetGame} from './change-game-state.js';
+import {newGameState, resetGame} from './change-game-state.js';
+import {INITIAL_GAME} from './game-data';
 
 export default () => {
   const gameBack = document.querySelector(`.game__back`);
