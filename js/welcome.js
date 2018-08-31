@@ -1,5 +1,4 @@
 import {getElementFromTemplate} from './util.js';
-import {gameSubmit} from './game-genre.js';
 import newGame from "./new-game.js";
 import {setTimer} from "./change-game-state.js";
 import {INITIAL_GAME} from "./game-data.js";
@@ -29,7 +28,6 @@ welcomeButton.addEventListener(`click`, () => {
   setTimer(INITIAL_GAME.time, () => {
     isLoose(newGameState);
   });
-  gameSubmit.disabled = true;
   if (document.querySelectorAll(`.track__button--pause`).length) {
     document.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
     document.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);

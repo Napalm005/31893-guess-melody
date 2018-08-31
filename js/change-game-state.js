@@ -3,7 +3,6 @@ import failTime from "./fail-time";
 import selectSlide from "./select-slide";
 import failTries from "./fail-tries";
 import resultSuccess from "./result-success";
-import welcome from "./welcome";
 
 
 export const newGameState = Object.assign({}, INITIAL_GAME);
@@ -64,30 +63,15 @@ export const setTimer = (time, cb) => {
 };
 
 export const resetGame = (currentState, initState) => {
-  currentState.scores = initState.scores;
-  currentState.lives = initState.lives;
-  currentState.time = initState.time;
+  currentState = Object.assign({}, initState);
 };
 
 export const isLoose = (currentState) => {
   if (currentState.lives === 0) {
     selectSlide(failTries);
-    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
-      resetGame(newGameState, INITIAL_GAME);
-      selectSlide(welcome);
-    });
   } else if (currentState.time === 0) {
     selectSlide(failTime);
-    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
-      resetGame(newGameState, INITIAL_GAME);
-      selectSlide(welcome);
-    });
-  } else if (currentState.level > 5) {
+  } else if (currentState.level > 3) {
     selectSlide(resultSuccess);
-    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
-      resetGame(newGameState, INITIAL_GAME);
-      selectSlide(welcome);
-    });
   }
-
 };

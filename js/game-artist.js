@@ -11,11 +11,11 @@ const screenArtist = (state, levelsArr) => `
   <h2 class="game__title">Кто исполняет эту песню?</h2>
   <div class="game__track">
     <button class="track__button track__button--play" type="button"></button>
-    <audio src="${levelsArr[1].track}"></audio>
+    <audio src="${levelsArr[2].track}"></audio>
   </div>
 
   <form class="game__artist">
-    ${[...(levelsArr[1].singers)].map((singer) => `
+    ${[...(levelsArr[2].singers)].map((singer) => `
       <div class="artist">
         <input class="artist__input visually-hidden" type="radio" name="answer" value="${singer.artist}" id="${singer.artist}">
         <label class="artist__name" for="${singer.artist}">
@@ -34,19 +34,28 @@ const template = `
 
 const element = getElementFromTemplate(template);
 
+const checkArtistResponse = (response) => {
+  if (response.value === levels[newGameState.level].artist) {
+    newGameState.scores += 1;
+  } else {
+    newGameState.scores -= 2;
+    newGameState.lives -= 1;
+  }
+};
+
 const trackButton = element.querySelector(`.track__button`);
 const flush = new Audio(`https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`);
 trackButton.addEventListener(`click`, () => {
   flush.play();
 });
 
-const gameArtist = element.querySelector(`.game__artist`);
-gameArtist.addEventListener(`click`, (e) => {
-  if (e.target.className === `artist__picture`) {
+Array.from(element.querySelectorAll(`.artist__input`)).forEach((item) => {
+  item.addEventListener(`change`, (e) => {
+    checkArtistResponse(e.target, newGameState);
     changeLevel(newGameState);
-    isLoose(newGameState);
     screen(newGameState, levels);
-  }
+    isLoose(newGameState);
+  });
 });
 
 export default element;

@@ -32,16 +32,34 @@ const template = `
 
 const element = getElementFromTemplate(template);
 
+const checkGenreResponse = () => {
+  let correct = true;
+  Array.from(element.querySelectorAll(`.game__input`)).forEach((item) => {
+    if ((item.checked === true && item.value !== levels[newGameState.level].genre) || (item.checked === false && item.value === levels[newGameState.level].genre)) {
+      correct = false;
+    }
+  });
+  if (correct) {
+    newGameState.scores += 1;
+  } else {
+    newGameState.scores -= 2;
+    newGameState.lives -= 1;
+  }
+};
+
 export const gameSubmit = element.querySelector(`.game__submit`);
 gameSubmit.addEventListener(`click`, (e) => {
   e.preventDefault();
+  checkGenreResponse();
   changeLevel(newGameState);
-  isLoose(newGameState);
-  screen(newGameState, levels);
   gameSubmit.disabled = true;
+  Array.from(element.querySelectorAll(`.game__input:checked`)).forEach((item) => {
+    item.checked = false;
+  });
+  screen(newGameState, levels);
   newGame();
+  isLoose(newGameState);
 });
-
 
 const isChecked = () => {
   if (document.querySelectorAll(`.game__input:checked`).length) {
