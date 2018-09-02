@@ -1,8 +1,6 @@
 import {getElementFromTemplate} from './util.js';
 import newGame from "./new-game.js";
-import {setTimer} from "./change-game-state.js";
-import {INITIAL_GAME} from "./game-data.js";
-import {isLoose, newGameState} from './change-game-state';
+import {newGameState, setTimer} from './change-game-state';
 import {screen} from './screen';
 import {levels} from "./game-data";
 
@@ -25,13 +23,7 @@ const welcomeButton = element.querySelector(`.welcome__button`);
 welcomeButton.addEventListener(`click`, () => {
   screen(newGameState, levels);
   newGame();
-  setTimer(INITIAL_GAME.time, () => {
-    isLoose(newGameState);
-  });
-  if (document.querySelectorAll(`.track__button--pause`).length) {
-    document.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
-    document.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
-  }
+  setTimer(newGameState.time);
 });
 
 export default element;

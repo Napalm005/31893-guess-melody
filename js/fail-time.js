@@ -1,6 +1,5 @@
 import {getElementFromTemplate} from './util.js';
-import {newGameState, resetGame} from "./change-game-state";
-import {INITIAL_GAME} from "./game-data";
+import {resetGame} from "./change-game-state";
 import selectSlide from "./select-slide";
 import welcome from "./welcome";
 
@@ -15,7 +14,7 @@ const template = `
 const element = getElementFromTemplate(template);
 
 element.querySelector(`.result__replay`).addEventListener(`click`, () => {
-  resetGame(newGameState, INITIAL_GAME);
+  resetGame();
   selectSlide(welcome);
 });
 

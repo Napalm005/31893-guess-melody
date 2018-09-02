@@ -10,20 +10,19 @@ export const calculateScore = (responseArr, lives) => {
   }
 
   let totalScore = 0;
-
   responseArr.forEach((response) => {
     if (response.result) {
-      if (response.time < 30) {
-        totalScore = totalScore + 2;
+      if (response.time < 30000) {
+        totalScore += 2;
       } else {
         totalScore++;
       }
     } else {
-      totalScore = totalScore - 2;
+      totalScore -= 2;
     }
   });
 
-  if (responseArr.length < 10) {
+  if (responseArr.length < 3) {
     return -1;
   }
   return totalScore;

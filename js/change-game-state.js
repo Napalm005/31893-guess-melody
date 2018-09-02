@@ -1,11 +1,14 @@
 import {INITIAL_GAME} from './game-data.js';
-import failTime from "./fail-time";
 import selectSlide from "./select-slide";
 import failTries from "./fail-tries";
 import resultSuccess from "./result-success";
+import failTime from "./fail-time";
+import newGame from "./new-game";
+import {screen} from "./screen";
+import {levels} from "./game-data";
 
 
-export const newGameState = Object.assign({}, INITIAL_GAME);
+export let newGameState = Object.assign({}, INITIAL_GAME, {fastResponses: 0});
 
 export const changeLives = (lives) => {
   if (typeof lives !== `number`) {
@@ -29,7 +32,8 @@ export const changeLevel = (state) => {
   return newGameState;
 };
 
-export const setTimer = (time, cb) => {
+export let timerId;
+export const setTimer = (time) => {
   if (typeof time !== `number`) {
     throw new Error(`Time should be of type number`);
   }
@@ -54,24 +58,39 @@ export const setTimer = (time, cb) => {
     newGameState.time = timer;
     if (timer === 0) {
       clearInterval(timerId);
-      cb();
+      selectSlide(failTime);
     }
     return newGameState;
   };
   updateClock();
-  let timerId = setInterval(updateClock, 1000);
+  timerId = setInterval(updateClock, 1000);
 };
 
-export const resetGame = (currentState, initState) => {
-  currentState = Object.assign({}, initState);
+export const resetGame = () => {
+  for (let audio of document.querySelectorAll(`audio`)) {
+    audio.muted = true;
+    audio.pause();
+  }
+  newGameState = Object.assign({}, INITIAL_GAME);
 };
 
-export const isLoose = (currentState) => {
+export const checkGameContinue = (currentState) => {
   if (currentState.lives === 0) {
     selectSlide(failTries);
-  } else if (currentState.time === 0) {
-    selectSlide(failTime);
-  } else if (currentState.level > 3) {
-    selectSlide(resultSuccess);
+  } else if (currentState.level > 4) {
+    selectSlide(resultSuccess());
+  } else {
+    screen(newGameState, levels);
+    setTimer(newGameState.time);
+    newGame();
+  }
+};
+
+export const checkResponse = (correct, time) => {
+  if (correct) {
+    newGameState.responses.push({result: true, time});
+  } else {
+    newGameState.responses.push({result: false, time});
+    newGameState.lives -= 1;
   }
 };
