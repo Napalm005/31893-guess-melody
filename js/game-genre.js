@@ -1,120 +1,99 @@
 import {getElementFromTemplate} from './util.js';
-import selectSlide from "./select-slide.js";
-import gameArtist from "./game-artist.js";
-import newGame from "./new-game.js";
+import header from "./header.js";
+import {levels} from './game-data.js';
+import {changeLevel, checkGameContinue, newGameState, checkResponse, pausePlaying} from './change-game-state';
 
-const template = `
-<section class="game game--genre">
-  <header class="game__header">
-    <a class="game__back" href="#">
-      <span class="visually-hidden">Сыграть ещё раз</span>
-      <img class="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию">
-    </a>
-  
-    <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-      <circle class="timer__line" cx="390" cy="390" r="370"
-              style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"/>
-    </svg>
-  
-    <div class="timer__value" xmlns="http://www.w3.org/1999/xhtml">
-      <span class="timer__mins">05</span>
-      <span class="timer__dots">:</span>
-      <span class="timer__secs">00</span>
-    </div>
-  
-    <div class="game__mistakes">
-      <div class="wrong"></div>
-      <div class="wrong"></div>
-      <div class="wrong"></div>
-    </div>
-  </header>
-  
+const renderGenre = () => {
+  const screenGenre = (state, levelsArr) => `
   <section class="game__screen">
-    <h2 class="game__title">Выберите инди-рок треки</h2>
+    <h2 class="game__title">Выберите ${levelsArr[state.level].genre} треки</h2>
     <form class="game__tracks">
-      <div class="track">
-        <button class="track__button track__button--play" type="button"></button>
-        <div class="track__status">
-          <audio></audio>
-        </div>
-        <div class="game__answer">
-          <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-1">
-          <label class="game__check" for="answer-1">Отметить</label>
-        </div>
-      </div>
-  
-      <div class="track">
-        <button class="track__button track__button--play" type="button"></button>
-        <div class="track__status">
-          <audio></audio>
-        </div>
-        <div class="game__answer">
-          <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-2">
-          <label class="game__check" for="answer-2">Отметить</label>
-        </div>
-      </div>
-  
-      <div class="track">
-        <button class="track__button track__button--play" type="button"></button>
-        <div class="track__status">
-          <audio></audio>
-        </div>
-        <div class="game__answer">
-          <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-3">
-          <label class="game__check" for="answer-3">Отметить</label>
-        </div>
-      </div>
-  
-      <div class="track">
-        <button class="track__button track__button--play" type="button"></button>
-        <div class="track__status">
-          <audio></audio>
-        </div>
-        <div class="game__answer">
-          <input class="game__input visually-hidden" type="checkbox" name="answer" value="answer-1" id="answer-4">
-          <label class="game__check" for="answer-4">Отметить</label>
-        </div>
-      </div>
-  
+      ${[...(levelsArr[state.level].tracks)].map((track) => `
+        <div class="track">
+          <button class="track__button track__button--play" type="button"></button>
+          <div class="track__status">
+            <audio src="${track.src}"></audio>
+          </div>
+          <div class="game__answer">
+            <input class="game__input visually-hidden" type="checkbox" name="answer" value="${track.genre}" id="${track.genre}">
+            <label class="game__check" for="${track.genre}">Отметить</label>
+          </div>
+        </div>`).join(``)}
       <button class="game__submit button" type="submit" disabled>Ответить</button>
     </form>
-  </section>
-</section>`;
+  </section>`;
 
-const element = getElementFromTemplate(template);
+  const template = `
+  <section class="game game--genre">
+    ${header(newGameState)}
+    ${screenGenre(newGameState, levels)}
+  </section>`;
 
-export const gameSubmit = element.querySelector(`.game__submit`);
-gameSubmit.addEventListener(`click`, () => {
-  selectSlide(gameArtist);
-  gameSubmit.disabled = true;
-  newGame();
-});
+  const element = getElementFromTemplate(template);
 
+  const beginTimeLevel = newGameState.time;
+  const checkGenreResponse = () => {
+    let correctCheck = true;
+    Array.from(element.querySelectorAll(`.game__input`)).forEach((item) => {
+      if ((item.checked === true && item.value !== levels[newGameState.level].genre) || (item.checked === false && item.value === levels[newGameState.level].genre)) {
+        correctCheck = false;
+      }
+    });
+    const spendTime = beginTimeLevel - newGameState.time;
+    checkResponse(correctCheck, spendTime);
+  };
 
-const isPlay = () => {
-  if (document.querySelectorAll(`.track__button--pause`).length) {
-    gameSubmit.disabled = false;
-  } else {
+  const gameSubmit = element.querySelector(`.game__submit`);
+  gameSubmit.addEventListener(`click`, (e) => {
+    e.preventDefault();
+    pausePlaying();
+    checkGenreResponse();
+    changeLevel(newGameState);
     gameSubmit.disabled = true;
-  }
+    Array.from(element.querySelectorAll(`.game__input:checked`)).forEach((item) => {
+      item.checked = false;
+    });
+    checkGameContinue(newGameState);
+  });
+
+  const isChecked = () => {
+    if (document.querySelectorAll(`.game__input:checked`).length) {
+      gameSubmit.disabled = false;
+    } else {
+      gameSubmit.disabled = true;
+    }
+  };
+
+  const gameTracks = element.querySelector(`.game__tracks`);
+  const trackButton = gameTracks.querySelector(`.track__button`);
+
+  trackButton.classList.remove(`track__button--play`);
+  trackButton.classList.add(`track__button--pause`);
+  element.querySelector(`audio`).play();
+
+  gameTracks.addEventListener(`click`, (e) => {
+    if (e.target.classList.contains(`track__button`)) {
+      pausePlaying();
+      if (e.target.classList.contains(`track__button--play`)) {
+        if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
+          gameTracks.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
+          gameTracks.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
+        }
+        e.target.classList.remove(`track__button--play`);
+        e.target.classList.add(`track__button--pause`);
+        e.target.nextElementSibling.querySelector(`audio`).play();
+      } else {
+        e.target.classList.remove(`track__button--pause`);
+        e.target.classList.add(`track__button--play`);
+        e.target.nextElementSibling.querySelector(`audio`).pause();
+      }
+    } else if (e.target.classList.contains(`game__input`)) {
+      isChecked();
+    }
+  });
+
+  return element;
 };
 
-const trackButton = element.querySelectorAll(`.track__button`);
-Array.from(trackButton).forEach((item) => {
-  item.addEventListener(`click`, () => {
-    if (item.classList.contains(`track__button--play`)) {
-      if (document.querySelectorAll(`.track__button--pause`).length) {
-        document.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
-        document.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
-      }
-      item.classList.remove(`track__button--play`);
-      item.classList.add(`track__button--pause`);
-    } else {
-      item.classList.remove(`track__button--pause`);
-      item.classList.add(`track__button--play`);
-    }
-    isPlay();
-  });
-});
 
-export default element;
+export default renderGenre;

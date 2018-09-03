@@ -1,12 +1,16 @@
-export const INITIAL_GAME = Object.freeze({
-  scores: 0,
-  lives: 3,
-  time: 1000 * 60 * 5
-});
+import {INITIAL_GAME} from './game-data.js';
+import selectSlide from "./select-slide";
+import failTries from "./fail-tries";
+import resultSuccess from "./result-success";
+import failTime from "./fail-time";
+import newGame from "./new-game";
+import {screen} from "./screen";
+import {levels} from "./game-data";
 
-export const newGameState = Object.assign({}, INITIAL_GAME);
 
-export const changelives = (lives) => {
+export let newGameState = Object.assign({}, INITIAL_GAME, {fastResponses: 0});
+
+export const changeLives = (lives) => {
   if (typeof lives !== `number`) {
     throw new Error(`Lives should be of type number`);
   }
@@ -17,8 +21,19 @@ export const changelives = (lives) => {
   return newGameState;
 };
 
+export const changeLevel = (state) => {
+  if (typeof state.level !== `number`) {
+    throw new Error(`Lives should be of type number`);
+  }
+  if (state.level < 0) {
+    throw new Error(`Lives should not be negative value`);
+  }
+  state.level++;
+  return newGameState;
+};
 
-export const setTimer = (time, cb) => {
+export let timerId;
+export const setTimer = (time) => {
   if (typeof time !== `number`) {
     throw new Error(`Time should be of type number`);
   }
@@ -43,16 +58,42 @@ export const setTimer = (time, cb) => {
     newGameState.time = timer;
     if (timer === 0) {
       clearInterval(timerId);
-      cb();
+      selectSlide(failTime);
     }
     return newGameState;
   };
   updateClock();
-  let timerId = setInterval(updateClock, 1000);
+  timerId = setInterval(updateClock, 1000);
 };
 
-export const resetGame = (currentState, initState) => {
-  currentState.scores = initState.scores;
-  currentState.lives = initState.lives;
-  currentState.time = initState.time;
+export const pausePlaying = () => {
+  for (let audio of document.querySelectorAll(`audio`)) {
+    audio.pause();
+  }
+};
+
+export const resetGame = () => {
+  pausePlaying();
+  newGameState = Object.assign({}, INITIAL_GAME);
+};
+
+export const checkGameContinue = (currentState) => {
+  if (currentState.lives === 0) {
+    selectSlide(failTries);
+  } else if (currentState.level > 4) {
+    selectSlide(resultSuccess());
+  } else {
+    screen(newGameState, levels);
+    setTimer(newGameState.time);
+    newGame();
+  }
+};
+
+export const checkResponse = (correct, time) => {
+  if (correct) {
+    newGameState.responses.push({result: true, time});
+  } else {
+    newGameState.responses.push({result: false, time});
+    newGameState.lives -= 1;
+  }
 };

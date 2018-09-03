@@ -6,15 +6,15 @@ describe(`calculateScore`, () => {
     assert.equal(calculateScore([
       {
         result: true,
-        time: 20
+        time: 20000
       },
       {
         result: true,
-        time: 20
+        time: 20000
       },
       {
         result: true,
-        time: 20
+        time: 20000
       }
     ], 3), -1);
     assert.equal(calculateScore([], 3), -1);
@@ -24,43 +24,43 @@ describe(`calculateScore`, () => {
     assert.equal(calculateScore([
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       },
       {
         result: true,
-        time: 40
+        time: 40000
       }
     ], 3), 10);
   });

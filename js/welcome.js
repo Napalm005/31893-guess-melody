@@ -1,9 +1,8 @@
 import {getElementFromTemplate} from './util.js';
-import selectSlide from './select-slide.js';
-import gameGenre, {gameSubmit} from './game-genre.js';
 import newGame from "./new-game.js";
-import {setTimer, INITIAL_GAME} from "./change-game-state.js";
-import failTime from './fail-time.js';
+import {newGameState, setTimer} from './change-game-state';
+import {screen} from './screen';
+import {levels} from "./game-data";
 
 const template = `
 <section class="welcome">
@@ -22,19 +21,9 @@ const element = getElementFromTemplate(template);
 
 const welcomeButton = element.querySelector(`.welcome__button`);
 welcomeButton.addEventListener(`click`, () => {
-  selectSlide(gameGenre);
+  screen(newGameState, levels);
   newGame();
-  setTimer(INITIAL_GAME.time, () => {
-    selectSlide(failTime);
-    document.querySelector(`.result__replay`).addEventListener(`click`, () => {
-      selectSlide(element);
-    });
-  });
-  gameSubmit.disabled = true;
-  if (document.querySelectorAll(`.track__button--pause`).length) {
-    document.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
-    document.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
-  }
+  setTimer(newGameState.time);
 });
 
 export default element;
