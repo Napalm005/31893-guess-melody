@@ -11,14 +11,12 @@ export const resultDisplay = (usersResuts, userResult) => {
     if (currentScore.result === true) {
       if (currentScore.time > 30000) {
         return totalScores + 1;
-      } else {
-        newGameState.fastResponses++;
-        return totalScores + 2;
       }
-    } else {
-      newGameState.fastResponses--;
-      return totalScores - 2;
+      newGameState.fastResponses++;
+      return totalScores + 2;
     }
+    newGameState.fastResponses--;
+    return totalScores - 2;
   }, 0);
   usersResuts.push(userResultScores);
   usersResuts.sort((a, b) => {

@@ -66,11 +66,14 @@ export const setTimer = (time) => {
   timerId = setInterval(updateClock, 1000);
 };
 
-export const resetGame = () => {
+export const pausePlaying = () => {
   for (let audio of document.querySelectorAll(`audio`)) {
-    audio.muted = true;
     audio.pause();
   }
+};
+
+export const resetGame = () => {
+  pausePlaying();
   newGameState = Object.assign({}, INITIAL_GAME);
 };
 

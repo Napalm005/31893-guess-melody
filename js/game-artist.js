@@ -2,6 +2,7 @@ import {getElementFromTemplate} from './util.js';
 import {newGameState, checkGameContinue, checkResponse, changeLevel} from './change-game-state.js';
 import {levels} from './game-data.js';
 import header from "./header.js";
+import {pausePlaying} from "./change-game-state";
 
 const renderArtist = () => {
   const screenArtist = (state, levelsArr) => `
@@ -54,7 +55,7 @@ const renderArtist = () => {
     } else {
       e.target.classList.remove(`track__button--pause`);
       e.target.classList.add(`track__button--play`);
-      audio.pause();
+      pausePlaying();
     }
   });
 

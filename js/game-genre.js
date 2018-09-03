@@ -1,7 +1,7 @@
 import {getElementFromTemplate} from './util.js';
 import header from "./header.js";
 import {levels} from './game-data.js';
-import {changeLevel, checkGameContinue, newGameState, checkResponse} from './change-game-state';
+import {changeLevel, checkGameContinue, newGameState, checkResponse, pausePlaying} from './change-game-state';
 
 const renderGenre = () => {
   const screenGenre = (state, levelsArr) => `
@@ -46,7 +46,7 @@ const renderGenre = () => {
   const gameSubmit = element.querySelector(`.game__submit`);
   gameSubmit.addEventListener(`click`, (e) => {
     e.preventDefault();
-    audio.pause();
+    pausePlaying();
     checkGenreResponse();
     changeLevel(newGameState);
     gameSubmit.disabled = true;
@@ -66,19 +66,18 @@ const renderGenre = () => {
 
   const gameTracks = element.querySelector(`.game__tracks`);
   const trackButton = gameTracks.querySelector(`.track__button`);
-  let audio = element.querySelector(`audio`);
 
   trackButton.classList.remove(`track__button--play`);
   trackButton.classList.add(`track__button--pause`);
-  audio.play();
+  element.querySelector(`audio`).play();
 
   gameTracks.addEventListener(`click`, (e) => {
     if (e.target.classList.contains(`track__button`)) {
-      audio.pause();
+      pausePlaying();
       if (e.target.classList.contains(`track__button--play`)) {
-        if (document.querySelectorAll(`.track__button--pause`).length) {
-          document.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
-          document.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
+        if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
+          gameTracks.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
+          gameTracks.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
         }
         e.target.classList.remove(`track__button--play`);
         e.target.classList.add(`track__button--pause`);
