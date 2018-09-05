@@ -6,6 +6,18 @@ export const INITIAL_GAME = Object.freeze({
   fastResponses: 0
 });
 
+export const resultModel = {
+  failTime: {
+    title: `Увы и ах!`
+  },
+  failTries: {
+    title: `Какая жалость!`
+  },
+  success: {
+    title: `Вы настоящий меломан!`
+  }
+};
+
 export const levels = [
   {
     typeLevel: `genre`,
