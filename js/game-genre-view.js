@@ -44,7 +44,6 @@ export default class GameGenreView extends AbstractView {
     const trackButton = gameTracks.querySelector(`.track__button`);
 
     toggleClass(trackButton, `track__button--play`, `track__button--pause`);
-
     this.element.querySelector(`audio`).play();
 
     gameTracks.addEventListener(`click`, (e) => {
@@ -54,12 +53,11 @@ export default class GameGenreView extends AbstractView {
           if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
             toggleClass(gameTracks.querySelector(`.track__button--pause`), `track__button--pause`, `track__button--play`);
           }
-          toggleClass(e.target, `track__button--play`, `track__button--pause`);
           e.target.nextElementSibling.querySelector(`audio`).play();
         } else {
-          toggleClass(e.target, `track__button--pause`, `track__button--play`);
           e.target.nextElementSibling.querySelector(`audio`).pause();
         }
+        toggleClass(e.target, `track__button--play`, `track__button--pause`);
       } else if (e.target.classList.contains(`game__input`)) {
         this.isChecked();
       }

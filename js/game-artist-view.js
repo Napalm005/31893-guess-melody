@@ -44,12 +44,11 @@ export default class GameArtistView extends AbstractView {
 
     trackButton.addEventListener(`click`, (e) => {
       if (e.target.classList.contains(`track__button--play`)) {
-        toggleClass(e.target, `track__button--play`, `track__button--pause`);
         audio.play();
       } else {
-        toggleClass(e.target, `track__button--pause`, `track__button--play`);
         pausePlaying();
       }
+      toggleClass(trackButton, `track__button--play`, `track__button--pause`);
     });
 
     [...this.element.querySelectorAll(`.artist__input`)].forEach((item) => {
