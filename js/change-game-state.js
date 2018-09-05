@@ -1,11 +1,11 @@
 import {INITIAL_GAME} from './game-data.js';
 import selectSlide from "./select-slide";
-import failTries from "./fail-tries";
 import resultSuccess from "./result-success";
-import failTime from "./fail-time";
 import newGame from "./new-game";
 import {screen} from "./screen";
-import {levels} from "./game-data";
+import {levels, failModel} from "./game-data";
+import welcome from "./welcome";
+import FailView from "./fail-view";
 
 
 export let newGameState = Object.assign({}, INITIAL_GAME, {fastResponses: 0});
@@ -58,7 +58,13 @@ export const setTimer = (time) => {
     newGameState.time = timer;
     if (timer === 0) {
       clearInterval(timerId);
-      selectSlide(failTime);
+
+      const failTime = new FailView(failModel.failTime);
+      failTime.onReStartGameButtonClick = () => {
+        resetGame();
+        selectSlide(welcome);
+      };
+      selectSlide(failTime.element);
     }
     return newGameState;
   };
@@ -79,7 +85,12 @@ export const resetGame = () => {
 
 export const checkGameContinue = (currentState) => {
   if (currentState.lives === 0) {
-    selectSlide(failTries);
+    const failTries = new FailView(failModel.failTries);
+    failTries.onReStartGameButtonClick = () => {
+      resetGame();
+      selectSlide(welcome);
+    };
+    selectSlide(failTries.element);
   } else if (currentState.level > 4) {
     selectSlide(resultSuccess());
   } else {

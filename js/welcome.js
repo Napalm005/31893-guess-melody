@@ -19,19 +19,19 @@ class WelcomView extends AbstractView {
             </section>`;
   }
 
-  onGameStartButtonClick() { }
-
   bind() {
     const welcomeButton = this.element.querySelector(`.welcome__button`);
     welcomeButton.addEventListener(`click`, () => {
-      this.onGameStartButtonClick();
+      this.onStartGameButtonClick();
     });
   }
+
+  onStartGameButtonClick() { }
 }
 
 const welcomView = new WelcomView();
 
-welcomView.onGameStartButtonClick = () => {
+welcomView.onStartGameButtonClick = () => {
   screen(newGameState, levels);
   newGame();
   setTimer(newGameState.time);

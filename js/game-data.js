@@ -6,6 +6,17 @@ export const INITIAL_GAME = Object.freeze({
   fastResponses: 0
 });
 
+export const failModel = {
+  failTime: {
+    title: `Увы и ах!`,
+    text: `Время вышло! Вы не успели отгадать все мелодии`
+  },
+  failTries: {
+    title: `Какая жалость!`,
+    text: `У вас закончились все попытки. Ничего, повезёт в следующий раз!`
+  }
+};
+
 export const levels = [
   {
     typeLevel: `genre`,
