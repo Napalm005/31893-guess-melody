@@ -6,14 +6,15 @@ export const INITIAL_GAME = Object.freeze({
   fastResponses: 0
 });
 
-export const failModel = {
+export const resultModel = {
   failTime: {
-    title: `Увы и ах!`,
-    text: `Время вышло! Вы не успели отгадать все мелодии`
+    title: `Увы и ах!`
   },
   failTries: {
-    title: `Какая жалость!`,
-    text: `У вас закончились все попытки. Ничего, повезёт в следующий раз!`
+    title: `Какая жалость!`
+  },
+  success: {
+    title: `Вы настоящий меломан!`
   }
 };
 

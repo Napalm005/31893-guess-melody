@@ -1,10 +1,12 @@
 import AbstractView from './abstract-view.js';
+import {resultDisplay} from "./result-display";
+import {newGameState} from "./change-game-state";
 
-export default class FailView extends AbstractView {
+export default class ResultFailView extends AbstractView {
   constructor(state) {
     super();
     this.title = state.title;
-    this.text = state.text;
+    this.text = resultDisplay([1, 2, 3, 4, 5], newGameState);
   }
   get template() {
     return `<section class="result">
