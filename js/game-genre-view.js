@@ -2,6 +2,7 @@ import header from "./header.js";
 import {levels} from './game-data.js';
 import {newGameState, checkResponse, pausePlaying} from './change-game-state';
 import AbstractView from "./abstract-view";
+import {replaceClass} from "./util";
 
 export default class GameGenreView extends AbstractView {
   constructor(levelsArr, state) {
@@ -42,8 +43,8 @@ export default class GameGenreView extends AbstractView {
     const gameTracks = this.element.querySelector(`.game__tracks`);
     const trackButton = gameTracks.querySelector(`.track__button`);
 
-    trackButton.classList.remove(`track__button--play`);
-    trackButton.classList.add(`track__button--pause`);
+    replaceClass(trackButton, `track__button--play`, `track__button--pause`);
+
     this.element.querySelector(`audio`).play();
 
     gameTracks.addEventListener(`click`, (e) => {
@@ -51,15 +52,12 @@ export default class GameGenreView extends AbstractView {
         pausePlaying();
         if (e.target.classList.contains(`track__button--play`)) {
           if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
-            gameTracks.querySelector(`.track__button--pause`).classList.add(`track__button--play`);
-            gameTracks.querySelector(`.track__button--pause`).classList.remove(`track__button--pause`);
+            replaceClass(gameTracks.querySelector(`.track__button--pause`), `track__button--pause`, `track__button--play`);
           }
-          e.target.classList.remove(`track__button--play`);
-          e.target.classList.add(`track__button--pause`);
+          replaceClass(e.target, `track__button--play`, `track__button--pause`);
           e.target.nextElementSibling.querySelector(`audio`).play();
         } else {
-          e.target.classList.remove(`track__button--pause`);
-          e.target.classList.add(`track__button--play`);
+          replaceClass(e.target, `track__button--pause`, `track__button--play`);
           e.target.nextElementSibling.querySelector(`audio`).pause();
         }
       } else if (e.target.classList.contains(`game__input`)) {
@@ -70,7 +68,7 @@ export default class GameGenreView extends AbstractView {
 
   checkGenreResponse() {
     let correctCheck = true;
-    Array.from(this.element.querySelectorAll(`.game__input`)).forEach((item) => {
+    [...this.element.querySelectorAll(`.game__input`)].forEach((item) => {
       if ((item.checked === true && item.value !== levels[newGameState.level].genre) || (item.checked === false && item.value === levels[newGameState.level].genre)) {
         correctCheck = false;
       }
@@ -81,11 +79,7 @@ export default class GameGenreView extends AbstractView {
   }
 
   isChecked() {
-    if (document.querySelectorAll(`.game__input:checked`).length) {
-      this.submitButton.disabled = false;
-    } else {
-      this.submitButton.disabled = true;
-    }
+    this.submitButton.disabled = !document.querySelectorAll(`.game__input:checked`).length;
   }
 
   onResponseSubmit() {}

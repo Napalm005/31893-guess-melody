@@ -12,7 +12,7 @@ export const screen = (state, levelsArr) => {
         gameGenre.checkGenreResponse();
         changeLevel(newGameState);
         gameGenre.submitButton.disabled = true;
-        Array.from(gameGenre.element.querySelectorAll(`.game__input:checked`)).forEach((item) => {
+        [...gameGenre.element.querySelectorAll(`.game__input:checked`)].forEach((item) => {
           item.checked = false;
         });
         checkGameContinue(newGameState);

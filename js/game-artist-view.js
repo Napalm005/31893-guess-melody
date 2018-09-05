@@ -3,6 +3,7 @@ import {levels} from './game-data.js';
 import header from "./header.js";
 import {pausePlaying} from "./change-game-state";
 import AbstractView from "./abstract-view";
+import {replaceClass} from "./util";
 
 export default class GameArtistView extends AbstractView {
   constructor(levelsArr, state) {
@@ -38,23 +39,20 @@ export default class GameArtistView extends AbstractView {
     const trackButton = this.element.querySelector(`.track__button`);
     const audio = this.element.querySelector(`audio`);
 
-    trackButton.classList.remove(`track__button--play`);
-    trackButton.classList.add(`track__button--pause`);
+    replaceClass(trackButton, `track__button--play`, `track__button--pause`);
     audio.play();
 
     trackButton.addEventListener(`click`, (e) => {
       if (e.target.classList.contains(`track__button--play`)) {
-        e.target.classList.remove(`track__button--play`);
-        e.target.classList.add(`track__button--pause`);
+        replaceClass(e.target, `track__button--play`, `track__button--pause`);
         audio.play();
       } else {
-        e.target.classList.remove(`track__button--pause`);
-        e.target.classList.add(`track__button--play`);
+        replaceClass(e.target, `track__button--pause`, `track__button--play`);
         pausePlaying();
       }
     });
 
-    Array.from(this.element.querySelectorAll(`.artist__input`)).forEach((item) => {
+    [...this.element.querySelectorAll(`.artist__input`)].forEach((item) => {
       item.addEventListener(`change`, (e) => {
         this.onResponseCheck(e);
       });
