@@ -3,7 +3,7 @@ import {levels} from './game-data.js';
 import header from "./header.js";
 import {pausePlaying} from "./change-game-state";
 import AbstractView from "./abstract-view";
-import {replaceClass} from "./util";
+import {toggleClass} from "./util";
 
 export default class GameArtistView extends AbstractView {
   constructor(levelsArr, state) {
@@ -39,15 +39,15 @@ export default class GameArtistView extends AbstractView {
     const trackButton = this.element.querySelector(`.track__button`);
     const audio = this.element.querySelector(`audio`);
 
-    replaceClass(trackButton, `track__button--play`, `track__button--pause`);
+    toggleClass(trackButton, `track__button--play`, `track__button--pause`);
     audio.play();
 
     trackButton.addEventListener(`click`, (e) => {
       if (e.target.classList.contains(`track__button--play`)) {
-        replaceClass(e.target, `track__button--play`, `track__button--pause`);
+        toggleClass(e.target, `track__button--play`, `track__button--pause`);
         audio.play();
       } else {
-        replaceClass(e.target, `track__button--pause`, `track__button--play`);
+        toggleClass(e.target, `track__button--pause`, `track__button--play`);
         pausePlaying();
       }
     });

@@ -13,7 +13,7 @@ export const declOfNum = (number, titles) => {
   return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 };
 
-export const replaceClass = (el, oldClass, newClass) => {
+export const toggleClass = (el, oldClass, newClass) => {
   el.classList.add(newClass);
   el.classList.remove(oldClass);
 };

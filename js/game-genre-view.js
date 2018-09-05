@@ -2,7 +2,7 @@ import header from "./header.js";
 import {levels} from './game-data.js';
 import {newGameState, checkResponse, pausePlaying} from './change-game-state';
 import AbstractView from "./abstract-view";
-import {replaceClass} from "./util";
+import {toggleClass} from "./util";
 
 export default class GameGenreView extends AbstractView {
   constructor(levelsArr, state) {
@@ -43,7 +43,7 @@ export default class GameGenreView extends AbstractView {
     const gameTracks = this.element.querySelector(`.game__tracks`);
     const trackButton = gameTracks.querySelector(`.track__button`);
 
-    replaceClass(trackButton, `track__button--play`, `track__button--pause`);
+    toggleClass(trackButton, `track__button--play`, `track__button--pause`);
 
     this.element.querySelector(`audio`).play();
 
@@ -52,12 +52,12 @@ export default class GameGenreView extends AbstractView {
         pausePlaying();
         if (e.target.classList.contains(`track__button--play`)) {
           if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
-            replaceClass(gameTracks.querySelector(`.track__button--pause`), `track__button--pause`, `track__button--play`);
+            toggleClass(gameTracks.querySelector(`.track__button--pause`), `track__button--pause`, `track__button--play`);
           }
-          replaceClass(e.target, `track__button--play`, `track__button--pause`);
+          toggleClass(e.target, `track__button--play`, `track__button--pause`);
           e.target.nextElementSibling.querySelector(`audio`).play();
         } else {
-          replaceClass(e.target, `track__button--pause`, `track__button--play`);
+          toggleClass(e.target, `track__button--pause`, `track__button--play`);
           e.target.nextElementSibling.querySelector(`audio`).pause();
         }
       } else if (e.target.classList.contains(`game__input`)) {
