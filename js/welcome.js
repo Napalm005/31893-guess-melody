@@ -1,6 +1,6 @@
 import AbstractView from './abstract-view.js';
 import newGame from "./new-game.js";
-import {newGameState, setTimer} from './change-game-state';
+import {gameState, setTimer} from './change-game-state';
 import {screen} from './screen';
 import {levels} from "./game-data";
 
@@ -32,9 +32,9 @@ class WelcomView extends AbstractView {
 const welcomView = new WelcomView();
 
 welcomView.onStartGameButtonClick = () => {
-  screen(newGameState, levels);
+  screen(gameState, levels);
   newGame();
-  setTimer(newGameState.time);
+  setTimer(gameState.time);
 };
 
 export default welcomView.element;

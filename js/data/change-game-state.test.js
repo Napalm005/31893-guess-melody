@@ -1,25 +1,25 @@
 import {assert} from 'chai';
-import {setTimer, changeLives} from '../change-game-state.js';
+import {setTimer, die} from '../change-game-state.js';
 
 describe(`Check lives changer`, () => {
 
   it(`should update lives of the game`, () => {
-    assert.equal(changeLives(1).lives, 1);
-    assert.equal(changeLives(2).lives, 2);
-    assert.equal(changeLives(10).lives, 10);
-    assert.equal(changeLives(102).lives, 102);
+    assert.equal(die(1).lives, 1);
+    assert.equal(die(2).lives, 2);
+    assert.equal(die(10).lives, 10);
+    assert.equal(die(102).lives, 102);
   });
 
   it(`should not allow set negative values`, () => {
-    assert.throws(() => changeLives(-1).lives, /Lives should not be negative value/);
+    assert.throws(() => die(-1).lives, /Lives should not be negative value/);
   });
 
   it(`should not allow set non number value`, () => {
-    assert.throws(() => changeLives([]), /Lives should be of type number/);
-    assert.throws(() => changeLives({}), /Lives should be of type number/);
-    assert.throws(() => changeLives(`1`), /Lives should be of type number/);
-    assert.throws(() => changeLives(null), /Lives should be of type number/);
-    assert.throws(() => changeLives(undefined), /Lives should be of type number/);
+    assert.throws(() => die([]), /Lives should be of type number/);
+    assert.throws(() => die({}), /Lives should be of type number/);
+    assert.throws(() => die(`1`), /Lives should be of type number/);
+    assert.throws(() => die(null), /Lives should be of type number/);
+    assert.throws(() => die(undefined), /Lives should be of type number/);
   });
 });
 
