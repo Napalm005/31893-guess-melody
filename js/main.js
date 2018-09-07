@@ -1,4 +1,4 @@
-import selectSlide from './select-slide.js';
+import {changeScreen} from './util.js';
 import welcomeScreen from './welcome.js';
 
-selectSlide(welcomeScreen);
+changeScreen(welcomeScreen);

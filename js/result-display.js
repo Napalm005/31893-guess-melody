@@ -1,5 +1,5 @@
 import {declOfNum} from './util.js';
-import {newGameState} from './change-game-state';
+import {gameState} from './change-game-state';
 
 export const resultDisplay = (usersResuts, userResult) => {
   if (userResult.timer === 0) {
@@ -12,10 +12,10 @@ export const resultDisplay = (usersResuts, userResult) => {
       if (currentScore.time > 30000) {
         return totalScores + 1;
       }
-      newGameState.fastResponses++;
+      gameState.fastResponses++;
       return totalScores + 2;
     }
-    newGameState.fastResponses--;
+    gameState.fastResponses--;
     return totalScores - 2;
   }, 0);
   usersResuts.push(userResultScores);

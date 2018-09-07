@@ -1,6 +1,6 @@
 import AbstractView from './abstract-view.js';
 import {resultDisplay} from "./result-display";
-import {newGameState} from "./change-game-state";
+import {gameState} from "./change-game-state";
 import {INITIAL_GAME} from "./game-data";
 import {calculateScore} from "./calculate-score";
 import {declOfNum} from "./util";
@@ -12,15 +12,15 @@ export default class ResultSuccessView extends AbstractView {
   }
 
   get template() {
-    const text = resultDisplay([1, 2, 3, 4, 5], newGameState);
+    const text = resultDisplay([1, 2, 3, 4, 5], gameState);
 
-    const gameTime = INITIAL_GAME.time - newGameState.time;
+    const gameTime = INITIAL_GAME.time - gameState.time;
     const minutes = Math.floor(gameTime / 60 / 1000);
     const seconds = gameTime / 1000 % 60;
 
-    const scoresSum = calculateScore(newGameState.responses, newGameState.lives);
-    const mistakeSum = 3 - newGameState.lives;
-    const speedScoresSum = newGameState.fastResponses * 2;
+    const scoresSum = calculateScore(gameState.responses, gameState.lives);
+    const mistakeSum = 3 - gameState.lives;
+    const speedScoresSum = gameState.fastResponses * 2;
 
     const scoresNum = declOfNum(scoresSum, [`балл`, `балла`, `баллов`]);
     const minutsNum = declOfNum(minutes, [`минуту`, `минуты`, `минут`]);

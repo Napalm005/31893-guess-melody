@@ -1,5 +1,5 @@
 import {INITIAL_GAME} from './game-data.js';
-import selectSlide from "./select-slide";
+import {changeScreen} from "./util";
 import newGame from "./new-game";
 import {screen} from "./screen";
 import {levels, resultModel} from "./game-data";
@@ -8,31 +8,61 @@ import ResultFailView from "./result-fail-view";
 import ResultSuccessView from "./result-success-view";
 
 
-export let newGameState = Object.assign({}, INITIAL_GAME, {fastResponses: 0});
+export let gameState = Object.assign({}, INITIAL_GAME);
 
-export const changeLives = (lives) => {
-  if (typeof lives !== `number`) {
+export const die = (state) => {
+  if (typeof state.lives !== `number`) {
     throw new Error(`Lives should be of type number`);
   }
-  if (lives < 0) {
+  if (state.lives < 0) {
     throw new Error(`Lives should not be negative value`);
   }
-  newGameState.lives = lives;
-  return newGameState;
+  const lives = state.lives - 1;
+  return Object.assign({}, state, {
+    lives
+  });
 };
 
-export const changeLevel = (state) => {
+export const nextLevel = (state) => {
   if (typeof state.level !== `number`) {
     throw new Error(`Lives should be of type number`);
   }
   if (state.level < 0) {
     throw new Error(`Lives should not be negative value`);
   }
-  state.level++;
-  return newGameState;
+  const level = state.level++;
+  return Object.assign({}, state, {
+    level
+  });
 };
 
-export let timerId;
+let timerId;
+let minutes;
+let seconds;
+const timeMins = document.querySelector(`.timer__mins`);
+const timeSecs = document.querySelector(`.timer__secs`);
+const updateClock = (time) => {
+  minutes = (`0` + parseInt(time / 60 / 1000, 10)).slice(-2);
+  seconds = (`0` + parseInt(time / 1000 % 60, 10)).slice(-2);
+
+  timeMins.textContent = minutes;
+  timeSecs.textContent = seconds;
+
+  time -= 1000;
+  gameState.time = time;
+  if (time === 0) {
+    clearInterval(timerId);
+
+    const failTime = new ResultFailView(resultModel.failTime);
+    failTime.onReStartGameButtonClick = () => {
+      resetGame();
+      changeScreen(welcome);
+    };
+    changeScreen(failTime.element);
+  }
+  return gameState;
+};
+
 export const setTimer = (time) => {
   if (typeof time !== `number`) {
     throw new Error(`Time should be of type number`);
@@ -40,35 +70,7 @@ export const setTimer = (time) => {
   if (time < 0) {
     throw new Error(`Time should not be negative value`);
   }
-
-  let minutes;
-  let seconds;
-  let timeMins = document.querySelector(`.timer__mins`);
-  let timeSecs = document.querySelector(`.timer__secs`);
-  let timer = time;
-
-  let updateClock = () => {
-    minutes = (`0` + parseInt(timer / 60 / 1000, 10)).slice(-2);
-    seconds = (`0` + parseInt(timer / 1000 % 60, 10)).slice(-2);
-
-    timeMins.textContent = minutes;
-    timeSecs.textContent = seconds;
-
-    timer -= 1000;
-    newGameState.time = timer;
-    if (timer === 0) {
-      clearInterval(timerId);
-
-      const failTime = new ResultFailView(resultModel.failTime);
-      failTime.onReStartGameButtonClick = () => {
-        resetGame();
-        selectSlide(welcome);
-      };
-      selectSlide(failTime.element);
-    }
-    return newGameState;
-  };
-  updateClock();
+  updateClock(time);
   timerId = setInterval(updateClock, 1000);
 };
 
@@ -80,7 +82,7 @@ export const pausePlaying = () => {
 
 export const resetGame = () => {
   pausePlaying();
-  newGameState = Object.assign({}, INITIAL_GAME);
+  gameState = Object.assign({}, INITIAL_GAME);
 };
 
 export const checkGameContinue = (currentState) => {
@@ -88,28 +90,28 @@ export const checkGameContinue = (currentState) => {
     const failTries = new ResultFailView(resultModel.failTries);
     failTries.onReStartGameButtonClick = () => {
       resetGame();
-      selectSlide(welcome);
+      changeScreen(welcome);
     };
-    selectSlide(failTries.element);
+    changeScreen(failTries.element);
   } else if (currentState.level > 4) {
     const resultSuccess = new ResultSuccessView(resultModel.success);
     resultSuccess.onReStartGameButtonClick = () => {
       resetGame();
-      selectSlide(welcome);
+      changeScreen(welcome);
     };
-    selectSlide(resultSuccess.element);
+    changeScreen(resultSuccess.element);
   } else {
-    screen(newGameState, levels);
-    setTimer(newGameState.time);
+    screen(gameState, levels);
+    setTimer(gameState.time);
     newGame();
   }
 };
 
 export const checkResponse = (correct, time) => {
   if (correct) {
-    newGameState.responses.push({result: true, time});
+    gameState.responses.push({result: true, time});
   } else {
-    newGameState.responses.push({result: false, time});
-    newGameState.lives -= 1;
+    gameState.responses.push({result: false, time});
+    die(gameState);
   }
 };

@@ -1,7 +1,7 @@
-import selectSlide from "./select-slide";
+import {changeScreen} from "./util";
 import GameGenreVeiw from "./game-genre-view";
 import GameArtistVeiw from "./game-artist-view";
-import {changeLevel, checkGameContinue, newGameState, pausePlaying} from "./change-game-state";
+import {nextLevel, checkGameContinue, gameState, pausePlaying} from "./change-game-state";
 
 export const screen = (state, levelsArr) => {
   switch (levelsArr[state.level].typeLevel) {
@@ -10,24 +10,24 @@ export const screen = (state, levelsArr) => {
       gameGenre.onResponseSubmit = () => {
         pausePlaying();
         gameGenre.checkGenreResponse();
-        changeLevel(newGameState);
+        nextLevel(gameState);
         gameGenre.submitButton.disabled = true;
         [...gameGenre.element.querySelectorAll(`.game__input:checked`)].forEach((item) => {
           item.checked = false;
         });
-        checkGameContinue(newGameState);
+        checkGameContinue(gameState);
       };
-      selectSlide(gameGenre.element);
+      changeScreen(gameGenre.element);
       break;
     case `artist`:
       const gameArtist = new GameArtistVeiw(levelsArr, state);
       gameArtist.onResponseCheck = (e) => {
         pausePlaying();
-        gameArtist.checkArtistResponse(e.target, newGameState);
-        changeLevel(newGameState);
-        checkGameContinue(newGameState);
+        gameArtist.checkArtistResponse(e.target, gameState);
+        nextLevel(gameState);
+        checkGameContinue(gameState);
       };
-      selectSlide(gameArtist.element);
+      changeScreen(gameArtist.element);
       break;
   }
 };
