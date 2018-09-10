@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {setTimer, die} from '../change-game-state.js';
+import {die} from '../change-game-state.js';
 
 describe(`Check lives changer`, () => {
 
@@ -24,19 +24,6 @@ describe(`Check lives changer`, () => {
 
 describe(`Check time changer`, () => {
 
-  // it(`should update time of the game`, () => {
-  //   assert.equal(setTimer(10000, () => {}).time, 10000);
-  // });
 
-  it(`should not allow set negative values`, () => {
-    assert.throws(() => setTimer({time: -1}), /Time should not be negative value/);
-  });
-  it(`should not allow set non number value`, () => {
-    assert.throws(() => setTimer({time: []}), /Time should be of type number/);
-    assert.throws(() => setTimer({time: {}}), /Time should be of type number/);
-    assert.throws(() => setTimer({time: `1`}), /Time should be of type number/);
-    assert.throws(() => setTimer({time: null}), /Time should be of type number/);
-    assert.throws(() => setTimer({time: undefined}), /Time should be of type number/);
-  });
 });
 
