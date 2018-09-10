@@ -1,23 +1,13 @@
 import {declOfNum} from './util.js';
-import {gameState} from './change-game-state';
+import {calculateScore} from './calculate-score';
 
 export const resultDisplay = (usersResuts, userResult) => {
-  if (userResult.timer === 0) {
+  if (userResult.time === 0) {
     return `Время вышло! Вы не успели отгадать все мелодии`;
   } else if (userResult.lives === 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
-  const userResultScores = userResult.responses.reduce((totalScores, currentScore) => {
-    if (currentScore.result === true) {
-      if (currentScore.time > 30000) {
-        return totalScores + 1;
-      }
-      gameState.fastResponses++;
-      return totalScores + 2;
-    }
-    gameState.fastResponses--;
-    return totalScores - 2;
-  }, 0);
+  const userResultScores = calculateScore(userResult.responses, userResult.lives);
   usersResuts.push(userResultScores);
   usersResuts.sort((a, b) => {
     return a - b;

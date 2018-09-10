@@ -2,12 +2,8 @@ import {assert} from 'chai';
 import {calculateScore} from '../calculate-score.js';
 
 describe(`calculateScore`, () => {
-  it(`should return -1 when responses quantity less 10`, () => {
+  it(`should return -1 when responses quantity less 3`, () => {
     assert.equal(calculateScore([
-      {
-        result: true,
-        time: 20000
-      },
       {
         result: true,
         time: 20000

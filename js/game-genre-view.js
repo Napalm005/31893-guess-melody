@@ -1,6 +1,5 @@
-import header from "./header.js";
 import {levels} from './game-data.js';
-import {gameState, checkResponse, pausePlaying} from './change-game-state';
+import {checkResponse, pausePlaying} from './change-game-state';
 import AbstractView from "./abstract-view";
 import {toggleClass} from "./util";
 
@@ -9,11 +8,12 @@ export default class GameGenreView extends AbstractView {
     super();
     this.genre = levelsArr[state.level].genre;
     this.tracks = [...(levelsArr[state.level].tracks)];
+    this.time = state.time;
+    this.level = state.level;
   }
 
   get template() {
     return `<section class="game game--genre">
-              ${header(gameState)}
               <section class="game__screen">
                 <h2 class="game__title">Выберите ${this.genre} треки</h2>
                 <form class="game__tracks">${this.tracks.map((track) => `
@@ -67,12 +67,12 @@ export default class GameGenreView extends AbstractView {
   checkGenreResponse() {
     let correctCheck = true;
     [...this.element.querySelectorAll(`.game__input`)].forEach((item) => {
-      if ((item.checked === true && item.value !== levels[gameState.level].genre) || (item.checked === false && item.value === levels[gameState.level].genre)) {
+      if ((item.checked === true && item.value !== levels[this.level].genre) || (item.checked === false && item.value === levels[this.level].genre)) {
         correctCheck = false;
       }
     });
-    const beginTimeLevel = gameState.time;
-    const spendTime = beginTimeLevel - gameState.time;
+    const beginTimeLevel = this.time;
+    const spendTime = beginTimeLevel - this.time;
     checkResponse(correctCheck, spendTime);
   }
 
