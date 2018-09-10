@@ -1,14 +1,15 @@
 import WelcomeView from './welcome-view';
 import GameScreen from './game-screen.js';
 import GameModel from './game-model.js';
+import ResultSuccessView from "./result-success-view";
 import {changeScreen} from './util';
 
-export default class Router {
+export default class Application {
 
   static showWelcome() {
     const welcomeView = new WelcomeView();
     welcomeView.onStartGameButtonClick = () => {
-      Router.showGame();
+      Application.showGame();
     };
     changeScreen(welcomeView.element);
   }
@@ -18,6 +19,12 @@ export default class Router {
     gameScreen.changeLevel();
     gameScreen.startGame();
   }
-}
 
-Router.showWelcome();
+  static showResult(resultModel, gameModel) {
+    const resultSuccessView = new ResultSuccessView(resultModel, gameModel);
+    resultSuccessView.onReStartGameButtonClick = () => {
+      Application.showGame();
+    };
+    changeScreen(resultSuccessView.element);
+  }
+}

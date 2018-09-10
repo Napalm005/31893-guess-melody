@@ -4,8 +4,7 @@ import HeaderView from "./header";
 import GameGenreVeiw from "./game-genre-view";
 import GameArtistVeiw from "./game-artist-view";
 import ResultFailView from "./result-fail-view";
-import ResultSuccessView from "./result-success-view";
-import WelcomeView from "./welcome-view";
+import Application from "./application";
 
 class GameScreen {
   constructor(model) {
@@ -25,6 +24,14 @@ class GameScreen {
   startTimer() {
     this.model.updateClock();
     this._interval = setInterval(() => {
+      if (this.model.state.time === 0) {
+        const failTime = new ResultFailView(resultModel.failTime, this.model.state);
+        failTime.onReStartGameButtonClick = () => {
+          this.resetGame();
+        };
+        this.stopTimer();
+        changeScreen(failTime.element);
+      }
       this.model.updateClock();
       this.updateHeader();
     }, 1000);
@@ -99,27 +106,16 @@ class GameScreen {
   }
 
   checkGameContinue() {
-    if (this.model.state.time === 0) {
-      const failTime = new ResultFailView(resultModel.failTime, this.model.state);
-      failTime.onReStartGameButtonClick = () => {
-        this.resetGame();
-      };
-      this.stopTimer();
-      changeScreen(failTime.element);
-    } else if (this.model.state.lives === 0) {
+    if (this.model.state.lives === 0) {
       const failTries = new ResultFailView(resultModel.failTries, this.model.state);
       failTries.onReStartGameButtonClick = () => {
         this.resetGame();
       };
       this.stopTimer();
       changeScreen(failTries.element);
-    } else if (this.model.state.level > 4) {
-      const resultSuccess = new ResultSuccessView(resultModel.success, this.model.state);
-      resultSuccess.onReStartGameButtonClick = () => {
-        this.resetGame();
-      };
+    } else if (this.model.state.level > 3) {
       this.stopTimer();
-      changeScreen(resultSuccess.element);
+      Application.showResult(resultModel.success, this.model.state);
     } else {
       this.model.nextLevel();
       this.changeLevel();
@@ -130,12 +126,7 @@ class GameScreen {
     this.stopTimer();
     this.pauseAudioPlaying();
     this.model.restart();
-    const welcomeView = new WelcomeView();
-    welcomeView.onStartGameButtonClick = () => {
-      this.changeLevel();
-      this.startTimer();
-    };
-    changeScreen(welcomeView.element);
+    Application.showWelcome();
   }
 
   pauseAudioPlaying() {
