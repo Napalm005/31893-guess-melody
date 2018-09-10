@@ -1,15 +1,12 @@
-import {levels} from './game-data.js';
-import {checkResponse, pausePlaying} from './change-game-state';
+import {pauseAudioPlaying} from './util';
 import AbstractView from "./abstract-view";
 import {toggleClass} from "./util";
 
 export default class GameGenreView extends AbstractView {
-  constructor(levelsArr, state) {
+  constructor(level) {
     super();
-    this.genre = levelsArr[state.level].genre;
-    this.tracks = [...(levelsArr[state.level].tracks)];
-    this.time = state.time;
-    this.level = state.level;
+    this.genre = level.genre;
+    this.tracks = [...(level.tracks)];
   }
 
   get template() {
@@ -48,7 +45,7 @@ export default class GameGenreView extends AbstractView {
 
     gameTracks.addEventListener(`click`, (e) => {
       if (e.target.classList.contains(`track__button`)) {
-        pausePlaying();
+        pauseAudioPlaying();
         if (e.target.classList.contains(`track__button--play`)) {
           if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
             toggleClass(gameTracks.querySelector(`.track__button--pause`), `track__button--pause`, `track__button--play`);
@@ -67,13 +64,11 @@ export default class GameGenreView extends AbstractView {
   checkGenreResponse() {
     let correctCheck = true;
     [...this.element.querySelectorAll(`.game__input`)].forEach((item) => {
-      if ((item.checked === true && item.value !== levels[this.level].genre) || (item.checked === false && item.value === levels[this.level].genre)) {
+      if ((item.checked === true && item.value !== this.genre) || (item.checked === false && item.value === this.genre)) {
         correctCheck = false;
       }
     });
-    const beginTimeLevel = this.time;
-    const spendTime = beginTimeLevel - this.time;
-    checkResponse(correctCheck, spendTime);
+    return correctCheck;
   }
 
   isChecked() {

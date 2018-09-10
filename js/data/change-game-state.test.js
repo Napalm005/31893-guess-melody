@@ -9,7 +9,6 @@ describe(`Check lives changer`, () => {
   });
 
   it(`should not allow set negative values`, () => {
-    assert.throws(() => die({lives: 0}), /Lives should not be negative value/);
     assert.throws(() => die({lives: -1}), /Lives should not be negative value/);
   });
 
@@ -30,14 +29,14 @@ describe(`Check time changer`, () => {
   // });
 
   it(`should not allow set negative values`, () => {
-    assert.throws(() => setTimer(-1), /Time should not be negative value/);
+    assert.throws(() => setTimer({time: -1}), /Time should not be negative value/);
   });
   it(`should not allow set non number value`, () => {
-    assert.throws(() => setTimer([]), /Time should be of type number/);
-    assert.throws(() => setTimer({}), /Time should be of type number/);
-    assert.throws(() => setTimer(`1`), /Time should be of type number/);
-    assert.throws(() => setTimer(null), /Time should be of type number/);
-    assert.throws(() => setTimer(undefined), /Time should be of type number/);
+    assert.throws(() => setTimer({time: []}), /Time should be of type number/);
+    assert.throws(() => setTimer({time: {}}), /Time should be of type number/);
+    assert.throws(() => setTimer({time: `1`}), /Time should be of type number/);
+    assert.throws(() => setTimer({time: null}), /Time should be of type number/);
+    assert.throws(() => setTimer({time: undefined}), /Time should be of type number/);
   });
 });
 

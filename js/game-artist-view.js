@@ -1,16 +1,13 @@
-import {checkResponse} from './change-game-state.js';
-import {pausePlaying, gameState} from "./change-game-state";
+import {pauseAudioPlaying} from "./util";
 import AbstractView from "./abstract-view";
 import {toggleClass} from "./util";
 
 export default class GameArtistView extends AbstractView {
-  constructor(levels, state) {
+  constructor(level) {
     super();
-    this.track = levels[state.level].track;
-    this.singers = [...(levels[state.level].singers)];
-    this.time = state.time;
-    this.level = state.level;
-    this.levels = levels;
+    this.track = level.track;
+    this.singers = [...(level.singers)];
+    this.artist = level.artist;
   }
 
   get template() {
@@ -46,7 +43,7 @@ export default class GameArtistView extends AbstractView {
       if (e.target.classList.contains(`track__button--play`)) {
         audio.play();
       } else {
-        pausePlaying();
+        pauseAudioPlaying();
       }
       toggleClass(trackButton, `track__button--play`, `track__button--pause`);
     });
@@ -59,10 +56,7 @@ export default class GameArtistView extends AbstractView {
   }
 
   checkArtistResponse(response) {
-    const beginTimeLevel = this.time;
-    const correctCheck = response.value === this.levels[this.level].artist;
-    const spendTime = beginTimeLevel - gameState.time;
-    checkResponse(correctCheck, spendTime);
+    return response.value === this.artist;
   }
 
   onResponseCheck() {}

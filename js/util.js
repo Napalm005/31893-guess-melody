@@ -1,4 +1,3 @@
-
 export const changeScreen = (element) => {
   const mainElement = document.querySelector(`section.main`);
   mainElement.innerHTML = ``;
@@ -27,5 +26,11 @@ export const toggleClass = (el, classOne, classTwo) => {
   } else {
     el.classList.add(classOne);
     el.classList.remove(classTwo);
+  }
+};
+
+export const pauseAudioPlaying = () => {
+  for (let audio of document.querySelectorAll(`audio`)) {
+    audio.pause();
   }
 };
