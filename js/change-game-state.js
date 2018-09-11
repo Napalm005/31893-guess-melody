@@ -42,3 +42,9 @@ export const makeFastResponse = (state) => {
     fastResponses
   });
 };
+
+export const setResponse = (state, response) => {
+  const arr = [...state.responses];
+  arr.push(response);
+  return Object.assign({}, state, {responses: arr});
+};

@@ -1,4 +1,4 @@
-import {nextLevel, updateClock, die, getLevel, makeFastResponse} from "./change-game-state";
+import {nextLevel, updateClock, die, getLevel, makeFastResponse, setResponse} from "./change-game-state";
 import {INITIAL_GAME} from './game-data.js';
 
 class GameModel {
@@ -26,6 +26,9 @@ class GameModel {
   }
   makeFastResponse() {
     this._state = makeFastResponse(this._state);
+  }
+  setResponse(response) {
+    this._state = setResponse(this._state, response);
   }
 }
 
