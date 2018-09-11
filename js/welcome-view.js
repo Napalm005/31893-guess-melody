@@ -1,10 +1,6 @@
 import AbstractView from './abstract-view.js';
-import newGame from "./new-game.js";
-import {newGameState, setTimer} from './change-game-state';
-import {screen} from './screen';
-import {levels} from "./game-data";
 
-class WelcomView extends AbstractView {
+export default class WelcomView extends AbstractView {
   get template() {
     return `<section class="welcome">
               <div class="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
@@ -26,15 +22,5 @@ class WelcomView extends AbstractView {
     });
   }
 
-  onStartGameButtonClick() { }
+  onStartGameButtonClick() {}
 }
-
-const welcomView = new WelcomView();
-
-welcomView.onStartGameButtonClick = () => {
-  screen(newGameState, levels);
-  newGame();
-  setTimer(newGameState.time);
-};
-
-export default welcomView.element;

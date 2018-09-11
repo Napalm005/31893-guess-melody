@@ -1,20 +1,17 @@
-import {newGameState, checkResponse} from './change-game-state.js';
-import {levels} from './game-data.js';
-import header from "./header.js";
-import {pausePlaying} from "./change-game-state";
+import {pauseAudioPlaying} from "./util";
 import AbstractView from "./abstract-view";
 import {toggleClass} from "./util";
 
 export default class GameArtistView extends AbstractView {
-  constructor(levelsArr, state) {
+  constructor(level) {
     super();
-    this.track = levelsArr[state.level].track;
-    this.singers = [...(levelsArr[state.level].singers)];
+    this.track = level.track;
+    this.singers = [...(level.singers)];
+    this.artist = level.artist;
   }
 
   get template() {
     return `<section class="game game--artist">
-              ${header(newGameState)}
               <section class="game__screen">
                 <h2 class="game__title">Кто исполняет эту песню?</h2>
                 <div class="game__track">
@@ -46,7 +43,7 @@ export default class GameArtistView extends AbstractView {
       if (e.target.classList.contains(`track__button--play`)) {
         audio.play();
       } else {
-        pausePlaying();
+        pauseAudioPlaying();
       }
       toggleClass(trackButton, `track__button--play`, `track__button--pause`);
     });
@@ -59,10 +56,7 @@ export default class GameArtistView extends AbstractView {
   }
 
   checkArtistResponse(response) {
-    const beginTimeLevel = newGameState.time;
-    const correctCheck = response.value === levels[newGameState.level].artist;
-    const spendTime = beginTimeLevel - newGameState.time;
-    checkResponse(correctCheck, spendTime);
+    return response.value === this.artist;
   }
 
   onResponseCheck() {}

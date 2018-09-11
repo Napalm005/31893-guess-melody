@@ -1,3 +1,9 @@
+export const changeScreen = (element) => {
+  const mainElement = document.querySelector(`section.main`);
+  mainElement.innerHTML = ``;
+  mainElement.appendChild(element);
+};
+
 export const getElementFromTemplate = (template) => {
   const wrapper = document.createElement(`div`);
   wrapper.innerHTML = template.trim();
@@ -20,5 +26,11 @@ export const toggleClass = (el, classOne, classTwo) => {
   } else {
     el.classList.add(classOne);
     el.classList.remove(classTwo);
+  }
+};
+
+export const pauseAudioPlaying = () => {
+  for (let audio of document.querySelectorAll(`audio`)) {
+    audio.pause();
   }
 };

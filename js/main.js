@@ -1,4 +1,3 @@
-import selectSlide from './select-slide.js';
-import welcomeScreen from './welcome.js';
+import Application from "./application";
 
-selectSlide(welcomeScreen);
+Application.showWelcome();
