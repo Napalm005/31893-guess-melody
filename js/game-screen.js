@@ -22,7 +22,6 @@ class GameScreen {
   }
 
   startTimer() {
-    this.model.updateClock();
     this._interval = setInterval(() => {
       if (this.model.state.time === 0) {
         const failTime = new ResultFailView(resultModel.failTime, this.model.state);
@@ -73,6 +72,7 @@ class GameScreen {
           [...gameGenre.element.querySelectorAll(`.game__input:checked`)].forEach((item) => {
             item.checked = false;
           });
+          this._beginTime = this.model.state.time;
           this.checkGameContinue(this.model.state);
         };
         changeScreen(gameGenre.element);
@@ -86,6 +86,7 @@ class GameScreen {
           const spendTime = this._beginTime - this.model.state.time;
           this.checkResponse(correctCheck, spendTime);
           this.checkGameContinue(this.model.state);
+          this._beginTime = this.model.state.time;
         };
         changeScreen(gameArtist.element);
         this.renderHeader();
