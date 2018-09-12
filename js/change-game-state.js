@@ -1,5 +1,3 @@
-import {levels} from "./game-data";
-
 export const die = (state) => {
   if (typeof state.lives !== `number`) {
     throw new Error(`Lives should be of type number`);
@@ -33,8 +31,6 @@ export const updateClock = (state) => {
     time
   });
 };
-
-export const getLevel = (state) => levels[state.level];
 
 export const makeFastResponse = (state) => {
   let fastResponses = state.fastResponses + 1;
