@@ -20,9 +20,10 @@ export const resultModel = {
 
 export const levels = [
   {
-    typeLevel: `genre`,
+    type: `genre`,
     genre: `Rock`,
-    tracks: new Set([
+    question: `Выберите Rock песни`,
+    answers: new Set([
       {src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`, genre: `Jazz`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`, genre: `Rock`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`, genre: `Pop`},
@@ -30,10 +31,11 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `artist`,
-    track: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
+    type: `artist`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
     artist: `Riot`,
-    singers: new Set([
+    question: `Кто исполняет эту песню?`,
+    answers: new Set([
       {
         artist: `Quincas Moreira`,
         name: `Firefly`,
@@ -52,9 +54,10 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `genre`,
-    genre: `Pop`,
-    tracks: new Set([
+    type: `genre`,
+    genre: `Jazz`,
+    question: `Выберите Jazz песни`,
+    answers: new Set([
       {src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`, genre: `Jazz`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`, genre: `Rock`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`, genre: `Pop`},
@@ -62,9 +65,10 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `genre`,
+    type: `genre`,
     genre: `Rock`,
-    tracks: new Set([
+    question: `Выберите Rock песни`,
+    answers: new Set([
       {src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`, genre: `Jazz`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`, genre: `Rock`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`, genre: `Pop`},
@@ -72,10 +76,11 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `artist`,
-    track: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
+    type: `artist`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
     artist: `Riot`,
-    singers: new Set([
+    question: `Кто исполняет эту песню?`,
+    answers: new Set([
       {
         artist: `Quincas Moreira`,
         name: `Firefly`,
@@ -94,9 +99,10 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `genre`,
+    type: `genre`,
     genre: `Rock`,
-    tracks: new Set([
+    question: `Выберите Rock песни`,
+    answers: new Set([
       {src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`, genre: `Jazz`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`, genre: `Rock`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`, genre: `Pop`},
@@ -104,9 +110,10 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `genre`,
+    type: `genre`,
     genre: `Rock`,
-    tracks: new Set([
+    question: `Выберите Rock песни`,
+    answers: new Set([
       {src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`, genre: `Jazz`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`, genre: `Rock`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`, genre: `Pop`},
@@ -114,9 +121,10 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `genre`,
+    type: `genre`,
     genre: `Rock`,
-    tracks: new Set([
+    question: `Выберите Rock песни`,
+    answers: new Set([
       {src: `https://www.youtube.com/audiolibrary_download?vid=91624fdc22fc54ed`, genre: `Jazz`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=dc3b4dc549becd6b`, genre: `Rock`},
       {src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`, genre: `Pop`},
@@ -124,10 +132,11 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `artist`,
-    track: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
+    type: `artist`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
     artist: `Riot`,
-    singers: new Set([
+    question: `Кто исполняет эту песню?`,
+    answers: new Set([
       {
         artist: `Quincas Moreira`,
         name: `Firefly`,
@@ -146,10 +155,11 @@ export const levels = [
     ])
   },
   {
-    typeLevel: `artist`,
-    track: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
+    type: `artist`,
+    src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
     artist: `Riot`,
-    singers: new Set([
+    question: `Кто исполняет эту песню?`,
+    answers: new Set([
       {
         artist: `Quincas Moreira`,
         name: `Firefly`,

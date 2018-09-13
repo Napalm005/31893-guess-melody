@@ -1,51 +1,36 @@
-/* Входной формат данных:
-{"level-0":
-  {
-    "text":"Вас зовут Луиджи Марио...",
-    "answers":
-    [
-      {
-        "action":"LEFT. Вы побежите влево, от гриба",
-        "result":"die"
-      },
-      {
-        "action":"RIGHT. Вы побежите вправо, прямо на гриб",
-        "result":"die"
-      },
-      {
-        "action":"JUMP. Вы прыгнете вверх",
-        "result":"next"
-      }
-    ]
-  }
-}
-*/
+const preprocessGenreAnswers = (answers) => {
+  const newAnswers = new Set();
+  answers.forEach((answer) => {
+    newAnswers.add(answer);
+  });
+  return newAnswers;
+};
 
-/* Выходной формат данных:
-{
-  'level-0': {
-    text: `Вас зовут Луиджи Марио...`,
-    answers: [
-      {
-        action: `left`,
-        title: `Вы побежите влево, от гриба`,
-        result: Result.DIE
-      },
-      {
-        action: `right`,
-        title: `Вы побежите вправо, прямо на гриб`,
-        result: Result.DIE
-      },
-      {
-        action: `jump`,
-        title: `Вы прыгнете вверх`,
-        result: Result.NEXT_LEVEL
-      }
-    ]
-  }
-}
-*/
+let rightArtist;
+const preprocessArtistAnswers = (answers) => {
+  const newAnswers = new Set();
+  answers.forEach((answer) => {
+    if (answer.isCorrect) {
+      rightArtist = answer.title;
+    }
+    answer = {
+      image: answer.image.url,
+      artist: answer.title,
+      name: (answer.name = `Здесь должно быть название песни`)
+    };
+    newAnswers.add(answer);
+  });
+  return newAnswers;
+};
 
 export const adaptServerData = (data) => {
+  for (const level of data) {
+    if (level.type === `genre`) {
+      level.answers = preprocessGenreAnswers(level.answers);
+    } else if (level.type === `artist`) {
+      level.answers = preprocessArtistAnswers(level.answers);
+      level.artist = rightArtist;
+    }
+  }
   return data;
 };

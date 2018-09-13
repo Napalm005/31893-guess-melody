@@ -4,6 +4,7 @@ import GameModel from './game-model.js';
 import ResultSuccessView from "./result-success-view";
 import ErrorView from "./error-view";
 import {changeScreen, checkStatus} from './util';
+import {adaptServerData} from './adapter.js';
 
 let gameData;
 export default class Application {
@@ -13,7 +14,7 @@ export default class Application {
     welcomeView.onStartGameButtonClick = () => {
       Application.showGame();
     };
-    fetch(`https://es.dump.academy/guess-melody/questions`).then(checkStatus).then((response) => response.json()).then((data) => (gameData = data)).then(() => changeScreen(welcomeView.element)).catch(Application.showError);
+    fetch(`https://es.dump.academy/guess-melody/questions`).then(checkStatus).then((response) => response.json()).then((data) => (gameData = adaptServerData(data))).then(() => changeScreen(welcomeView.element)).catch(Application.showError);
   }
 
   static showGame() {

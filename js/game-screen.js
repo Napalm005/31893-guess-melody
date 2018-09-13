@@ -60,7 +60,7 @@ class GameScreen {
   }
 
   changeLevel() {
-    switch (this.model.level.typeLevel) {
+    switch (this.model.level.type) {
       case `genre`:
         const gameGenre = new GameGenreVeiw(this.model.level);
         gameGenre.onResponseSubmit = () => {

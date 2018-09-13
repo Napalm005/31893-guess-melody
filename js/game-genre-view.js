@@ -6,14 +6,15 @@ export default class GameGenreView extends AbstractView {
   constructor(level) {
     super();
     this.genre = level.genre;
-    this.tracks = [...(level.tracks)];
+    this.answers = [...(level.answers)];
+    this.question = level.question;
   }
 
   get template() {
     return `<section class="game game--genre">
               <section class="game__screen">
-                <h2 class="game__title">Выберите ${this.genre} треки</h2>
-                <form class="game__tracks">${this.tracks.map((track) => `
+                <h2 class="game__title">${this.question}</h2>
+                <form class="game__tracks">${this.answers.map((track) => `
                       <div class="track">
                         <button class="track__button track__button--play" type="button"></button>
                         <div class="track__status">
