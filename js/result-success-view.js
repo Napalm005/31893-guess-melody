@@ -17,7 +17,7 @@ export default class ResultSuccessView extends AbstractView {
   }
 
   get template() {
-    const text = resultDisplay(this.usersResults, this.state);
+    const text = resultDisplay(this.state, this.usersResults);
 
     const gameTime = INITIAL_GAME.time - this.time;
     const minutes = Math.floor(gameTime / 60 / 1000);

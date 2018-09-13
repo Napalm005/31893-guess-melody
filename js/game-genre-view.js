@@ -22,8 +22,8 @@ export default class GameGenreView extends AbstractView {
                       <audio src="${track.src}"></audio>
                     </div>
                     <div class="game__answer">
-                      <input class="game__input visually-hidden" type="checkbox" name="answer" value="${track.genre}" id="${track.genre}">
-                      <label class="game__check" for="${track.genre}">Отметить</label>
+                      <input class="game__input visually-hidden" type="checkbox" name="answer" value="${track.genre}" id="${track.src}">
+                      <label class="game__check" for="${track.src}">Отметить</label>
                     </div>
                   </div>`).join(``)}
                   <button class="game__submit button" type="submit" disabled>Ответить</button>

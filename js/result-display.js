@@ -1,7 +1,7 @@
 import {declOfNum} from './util.js';
 import {calculateScore} from './calculate-score';
 
-export const resultDisplay = (usersResuts, userResult) => {
+export const resultDisplay = (userResult, usersResuts = []) => {
   const usersResutsAdapted = usersResuts.map((result) => {
     return result.scores;
   });
@@ -11,7 +11,6 @@ export const resultDisplay = (usersResuts, userResult) => {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
   const userResultScores = calculateScore(userResult.responses, userResult.lives);
-  usersResutsAdapted.push(userResultScores);
   usersResutsAdapted.sort((a, b) => {
     return a - b;
   });

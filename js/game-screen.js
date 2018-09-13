@@ -23,6 +23,8 @@ class GameScreen {
 
   startTimer() {
     this._interval = setInterval(() => {
+      this.model.updateClock();
+      this.updateHeader();
       if (this.model.state.time === 0) {
         const failTime = new ResultFailView(resultModel.failTime, this.model.state);
         failTime.onReStartGameButtonClick = () => {
@@ -31,8 +33,6 @@ class GameScreen {
         this.stopTimer();
         changeScreen(failTime.element);
       }
-      this.model.updateClock();
-      this.updateHeader();
     }, 1000);
   }
 
