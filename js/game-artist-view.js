@@ -1,6 +1,7 @@
 import {pauseAudioPlaying} from "./util";
 import AbstractView from "./abstract-view";
 import {toggleClass} from "./util";
+import {DEBUG} from "./settings";
 
 export default class GameArtistView extends AbstractView {
   constructor(level) {
@@ -22,7 +23,7 @@ export default class GameArtistView extends AbstractView {
               
                 <form class="game__artist">
                   ${this.answers.map((singer) => `
-                    <div class="artist">
+                    <div class="artist" style="${(singer.artist === this.artist) && DEBUG ? `border: 1px solid red` : ``}">
                       <input class="artist__input visually-hidden" type="radio" name="answer" value="${singer.artist}" id="${singer.artist}">
                       <label class="artist__name" for="${singer.artist}">
                         <img class="artist__picture" src="${singer.image}" alt="${singer.artist}">

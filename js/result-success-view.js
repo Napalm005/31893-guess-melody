@@ -5,7 +5,7 @@ import {calculateScore} from "./calculate-score";
 import {declOfNum} from "./util";
 
 export default class ResultSuccessView extends AbstractView {
-  constructor(resultModel, state) {
+  constructor(resultModel, state, usersResults) {
     super();
     this.title = resultModel.title;
     this.state = state;
@@ -13,10 +13,11 @@ export default class ResultSuccessView extends AbstractView {
     this.lives = state.lives;
     this.responses = state.responses;
     this.fastResponses = state.fastResponses;
+    this.usersResults = usersResults;
   }
 
   get template() {
-    const text = resultDisplay([1, 2, 3, 4, 5], this.state);
+    const text = resultDisplay(this.usersResults, this.state);
 
     const gameTime = INITIAL_GAME.time - this.time;
     const minutes = Math.floor(gameTime / 60 / 1000);
