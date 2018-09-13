@@ -60,7 +60,7 @@ class GameScreen {
   }
 
   changeLevel() {
-    switch (this.model.level.typeLevel) {
+    switch (this.model.level.type) {
       case `genre`:
         const gameGenre = new GameGenreVeiw(this.model.level);
         gameGenre.onResponseSubmit = () => {
@@ -96,12 +96,12 @@ class GameScreen {
 
   checkResponse(correct, time) {
     if (correct) {
-      this.model.state.responses.push({result: true, time});
+      this.model.setResponse({result: true, time});
       if (time < 30000) {
         this.model.makeFastResponse();
       }
     } else {
-      this.model.state.responses.push({result: false, time});
+      this.model.setResponse({result: false, time});
       this.model.die();
     }
   }

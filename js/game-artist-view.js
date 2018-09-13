@@ -5,22 +5,23 @@ import {toggleClass} from "./util";
 export default class GameArtistView extends AbstractView {
   constructor(level) {
     super();
-    this.track = level.track;
-    this.singers = [...(level.singers)];
+    this.src = level.src;
+    this.answers = [...(level.answers)];
     this.artist = level.artist;
+    this.question = level.question;
   }
 
   get template() {
     return `<section class="game game--artist">
               <section class="game__screen">
-                <h2 class="game__title">Кто исполняет эту песню?</h2>
+                <h2 class="game__title">${this.question}</h2>
                 <div class="game__track">
                   <button class="track__button track__button--play" type="button"></button>
-                  <audio src="${this.track}"></audio>
+                  <audio src="${this.src}"></audio>
                 </div>
               
                 <form class="game__artist">
-                  ${this.singers.map((singer) => `
+                  ${this.answers.map((singer) => `
                     <div class="artist">
                       <input class="artist__input visually-hidden" type="radio" name="answer" value="${singer.artist}" id="${singer.artist}">
                       <label class="artist__name" for="${singer.artist}">

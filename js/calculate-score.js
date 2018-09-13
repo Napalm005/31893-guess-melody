@@ -11,10 +11,8 @@ export const calculateScore = (responseArr, lives) => {
 
   const totalScore = responseArr.reduce((totalScores, currentScore) => {
     if (currentScore.result === true) {
-      if (currentScore.time > 30000) {
-        return totalScores + 1;
-      }
-      return totalScores + 2;
+      totalScores = (currentScore.time > 30000) ? totalScores + 1 : totalScores + 2;
+      return totalScores;
     }
     return totalScores - 2;
   }, 0);
