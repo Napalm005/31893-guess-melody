@@ -1,4 +1,6 @@
 import {resultModel} from "./game-data";
+import {getRadius} from "./get-radius";
+import {INITIAL_GAME, TIME_LINE_RADIUS} from "./game-data";
 import {changeScreen} from "./util";
 import HeaderView from "./header";
 import GameGenreVeiw from "./game-genre-view";
@@ -44,6 +46,8 @@ class GameScreen {
   updateHeader() {
     const game = document.querySelector(`.game`);
     const headerView = new HeaderView(this.model.state);
+    const timerLine = headerView.element.querySelector(`.timer__line`);
+
     game.replaceChild(headerView.element, this.header.element);
     headerView.onGameBackBtnClick = () => {
       const modalConfirmView = new ModalConfirmView();
@@ -55,6 +59,8 @@ class GameScreen {
       };
       game.appendChild(modalConfirmView.element);
     };
+    timerLine.setAttribute(`stroke-dasharray`, getRadius(this.model.state.time / INITIAL_GAME.time, TIME_LINE_RADIUS).stroke);
+    timerLine.setAttribute(`stroke-dashoffset`, getRadius(this.model.state.time / INITIAL_GAME.time, TIME_LINE_RADIUS).offset);
     this.header = headerView;
   }
 

@@ -17,3 +17,5 @@ export const resultModel = {
     title: `Вы настоящий меломан!`
   }
 };
+
+export const TIME_LINE_RADIUS = 370;
