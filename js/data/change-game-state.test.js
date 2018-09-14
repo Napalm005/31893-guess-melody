@@ -1,8 +1,7 @@
-import {assert} from 'chai';
-import {die} from '../change-game-state.js';
+import {assert} from "chai";
+import {die} from "../change-game-state.js";
 
 describe(`Check lives changer`, () => {
-
   it(`should make (lives - 1)`, () => {
     assert.equal(die({lives: 1}).lives, 0);
     assert.equal(die({lives: 2}).lives, 1);
@@ -21,9 +20,4 @@ describe(`Check lives changer`, () => {
   });
 });
 
-
-describe(`Check time changer`, () => {
-
-
-});
-
+describe(`Check time changer`, () => {});

@@ -12,6 +12,8 @@
     "test": "npm run eslint && npm run stylelint && gulp test"
   },
   "devDependencies": {
+    "@babel/core": "7.0.1",
+    "@babel/preset-env": "7.0.0",
     "autoprefixer": "9.0.2",
     "browser-sync": "2.24.6",
     "chai": "4.1.2",
@@ -29,7 +31,10 @@
     "gulp-rename": "1.4.0",
     "gulp-sass": "4.0.1",
     "gulp-sourcemaps": "2.6.4",
+    "gulp-uglify": "3.0.1",
+    "rollup-plugin-babel": "4.0.3",
     "rollup-plugin-commonjs": "9.1.5",
+    "rollup-plugin-node-resolve": "3.4.0",
     "stylelint": "^9.5.0",
     "stylelint-config-htmlacademy": "0.1.x"
   },
@@ -37,6 +42,12 @@
     "node": "8"
   },
   "dependencies": {
+    "@babel/polyfill": "7.0.0",
     "npm": "^6.4.1"
+  },
+  "prettier": {
+    "printWidth": 300,
+    "arrowParens": "always",
+    "bracketSpacing": false
   }
 }

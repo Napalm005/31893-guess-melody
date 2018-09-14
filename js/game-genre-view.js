@@ -1,4 +1,4 @@
-import {pauseAudioPlaying} from './util';
+import {pauseAudioPlaying} from "./util";
 import AbstractView from "./abstract-view";
 import {toggleClass} from "./util";
 import {DEBUG} from "./settings";
@@ -7,7 +7,7 @@ export default class GameGenreView extends AbstractView {
   constructor(level) {
     super();
     this.genre = level.genre;
-    this.answers = [...(level.answers)];
+    this.answers = [...level.answers];
     this.question = level.question;
   }
 
@@ -15,8 +15,9 @@ export default class GameGenreView extends AbstractView {
     return `<section class="game game--genre">
               <section class="game__screen">
                 <h2 class="game__title">${this.question}</h2>
-                <form class="game__tracks">${this.answers.map((track) => `
-                  <div class="track" style="${(track.genre === this.genre) && DEBUG ? `border: 1px solid red` : ``}">
+                <form class="game__tracks">${this.answers
+                  .map((track) => `
+                  <div class="track" style="${track.genre === this.genre && DEBUG ? `border: 1px solid red` : ``}">
                     <button class="track__button track__button--play" type="button"></button>
                     <div class="track__status">
                       <audio src="${track.src}"></audio>
@@ -25,7 +26,9 @@ export default class GameGenreView extends AbstractView {
                       <input class="game__input visually-hidden" type="checkbox" name="answer" value="${track.genre}" id="${track.src}">
                       <label class="game__check" for="${track.src}">Отметить</label>
                     </div>
-                  </div>`).join(``)}
+                  </div>`
+                  )
+                  .join(``)}
                   <button class="game__submit button" type="submit" disabled>Ответить</button>
                 </form>
               </section>

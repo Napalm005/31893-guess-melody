@@ -1,16 +1,15 @@
-import WelcomeView from './welcome-view';
-import GameScreen from './game-screen.js';
-import GameModel from './game-model.js';
+import WelcomeView from "./welcome-view";
+import GameScreen from "./game-screen.js";
+import GameModel from "./game-model.js";
 import ResultSuccessView from "./result-success-view";
 import ErrorView from "./error-view";
-import {changeScreen} from './util';
-import Loader from './loader.js';
+import {changeScreen} from "./util";
+import Loader from "./loader.js";
 import {calculateScore} from "./calculate-score";
 import {INITIAL_GAME} from "./game-data";
 
 let gameData;
 export default class Application {
-
   static showWelcome() {
     const welcomeView = new WelcomeView();
     welcomeView.onStartGameButtonClick = () => {
@@ -19,7 +18,10 @@ export default class Application {
     if (gameData) {
       changeScreen(welcomeView.element);
     } else {
-      Loader.loadData().then((data) => (gameData = data)).then(() => changeScreen(welcomeView.element)).catch(Application.showError);
+      Loader.loadData()
+        .then((data) => (gameData = data))
+        .then(() => changeScreen(welcomeView.element))
+        .catch(Application.showError);
     }
   }
 

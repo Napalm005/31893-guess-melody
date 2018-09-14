@@ -22,13 +22,11 @@ export default class HeaderView extends AbstractView {
               <div class="timer__value" xmlns="http://www.w3.org/1999/xhtml">
                 <span class="timer__mins">${(`0` + parseInt(this.time / 60 / 1000, 10)).slice(-2)}</span>
                 <span class="timer__dots">:</span>
-                <span class="timer__secs">${(`0` + parseInt(this.time / 1000 % 60, 10)).slice(-2)}</span>
+                <span class="timer__secs">${(`0` + parseInt((this.time / 1000) % 60, 10)).slice(-2)}</span>
               </div>
             
               <div class="game__mistakes">
-                ${new Array(3 - this.lives)
-                  .fill(`<div class="wrong"></div>`)
-                  .join(``)}
+                ${new Array(3 - this.lives).fill(`<div class="wrong"></div>`).join(``)}
               </div>
             </header>`;
   }
