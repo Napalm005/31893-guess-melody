@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import AbstractView from "./abstract-view.js";
 import {resultDisplay} from "./result-display";
 import {INITIAL_GAME} from "./game-data";
 import {calculateScore} from "./calculate-score";
@@ -21,7 +21,7 @@ export default class ResultSuccessView extends AbstractView {
 
     const gameTime = INITIAL_GAME.time - this.time;
     const minutes = Math.floor(gameTime / 60 / 1000);
-    const seconds = gameTime / 1000 % 60;
+    const seconds = (gameTime / 1000) % 60;
 
     const scoresSum = calculateScore(this.responses, this.lives);
     const mistakeSum = 3 - this.lives;
@@ -49,5 +49,5 @@ export default class ResultSuccessView extends AbstractView {
     });
   }
 
-  onReStartGameButtonClick() { }
+  onReStartGameButtonClick() {}
 }

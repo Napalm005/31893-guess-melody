@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import AbstractView from "./abstract-view.js";
 import {resultDisplay} from "./result-display";
 
 export default class ResultFailView extends AbstractView {
@@ -24,5 +24,5 @@ export default class ResultFailView extends AbstractView {
     });
   }
 
-  onReStartGameButtonClick() { }
+  onReStartGameButtonClick() {}
 }

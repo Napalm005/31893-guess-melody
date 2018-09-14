@@ -8,7 +8,8 @@ export const die = (state) => {
   const lives = state.lives - 1;
   const fastResponses = state.fastResponses - 1;
   return Object.assign({}, state, {
-    lives, fastResponses
+    lives,
+    fastResponses
   });
 };
 

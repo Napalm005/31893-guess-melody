@@ -1,5 +1,5 @@
 import {nextLevel, updateClock, die, makeFastResponse, setResponse} from "./change-game-state";
-import {INITIAL_GAME} from './game-data.js';
+import {INITIAL_GAME} from "./game-data.js";
 
 class GameModel {
   constructor(data) {

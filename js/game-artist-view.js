@@ -7,7 +7,7 @@ export default class GameArtistView extends AbstractView {
   constructor(level) {
     super();
     this.src = level.src;
-    this.answers = [...(level.answers)];
+    this.answers = [...level.answers];
     this.artist = level.artist;
     this.question = level.question;
   }
@@ -22,14 +22,17 @@ export default class GameArtistView extends AbstractView {
                 </div>
               
                 <form class="game__artist">
-                  ${this.answers.map((singer) => `
-                    <div class="artist" style="${(singer.artist === this.artist) && DEBUG ? `border: 1px solid red` : ``}">
+                  ${this.answers
+                    .map((singer) => `
+                    <div class="artist" style="${singer.artist === this.artist && DEBUG ? `border: 1px solid red` : ``}">
                       <input class="artist__input visually-hidden" type="radio" name="answer" value="${singer.artist}" id="${singer.artist}">
                       <label class="artist__name" for="${singer.artist}">
                         <img class="artist__picture" src="${singer.image}" alt="${singer.artist}">
                         ${singer.artist}
                       </label>
-                    </div>`).join(``)}
+                    </div>`
+                    )
+                    .join(``)}
                 </form>
               </section>`;
   }
