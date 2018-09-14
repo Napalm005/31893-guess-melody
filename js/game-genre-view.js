@@ -1,6 +1,7 @@
 import {pauseAudioPlaying} from './util';
 import AbstractView from "./abstract-view";
 import {toggleClass} from "./util";
+import {DEBUG} from "./settings";
 
 export default class GameGenreView extends AbstractView {
   constructor(level) {
@@ -15,20 +16,20 @@ export default class GameGenreView extends AbstractView {
               <section class="game__screen">
                 <h2 class="game__title">${this.question}</h2>
                 <form class="game__tracks">${this.answers.map((track) => `
-                      <div class="track">
-                        <button class="track__button track__button--play" type="button"></button>
-                        <div class="track__status">
-                          <audio src="${track.src}"></audio>
-                        </div>
-                        <div class="game__answer">
-                          <input class="game__input visually-hidden" type="checkbox" name="answer" value="${track.genre}" id="${track.genre}">
-                          <label class="game__check" for="${track.genre}">Отметить</label>
-                        </div>
-                      </div>`).join(``)}
-                    <button class="game__submit button" type="submit" disabled>Ответить</button>
-                  </form>
-                </section>
-              </section>`;
+                  <div class="track" style="${(track.genre === this.genre) && DEBUG ? `border: 1px solid red` : ``}">
+                    <button class="track__button track__button--play" type="button"></button>
+                    <div class="track__status">
+                      <audio src="${track.src}"></audio>
+                    </div>
+                    <div class="game__answer">
+                      <input class="game__input visually-hidden" type="checkbox" name="answer" value="${track.genre}" id="${track.src}">
+                      <label class="game__check" for="${track.src}">Отметить</label>
+                    </div>
+                  </div>`).join(``)}
+                  <button class="game__submit button" type="submit" disabled>Ответить</button>
+                </form>
+              </section>
+            </section>`;
   }
 
   bind() {

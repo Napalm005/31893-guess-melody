@@ -61,7 +61,7 @@ const localData1 = [
       {
         artist: `Jason Shaw`,
         name: `Здесь должно быть название песни`,
-        image: `https://freemusicarchive.org/file/images/artists/Jason_Shaw_-_20131120155444083.jpg?width=300&height=3000`
+        image: `https://freemusicarchive.org/file/images/artists/Jason_Shaw_-_20131120155444083.jpg?width=300&height=300`
       }
     ])
   }

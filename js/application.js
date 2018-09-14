@@ -3,8 +3,10 @@ import GameScreen from './game-screen.js';
 import GameModel from './game-model.js';
 import ResultSuccessView from "./result-success-view";
 import ErrorView from "./error-view";
-import {changeScreen, checkStatus} from './util';
-import {adaptServerData} from './adapter.js';
+import {changeScreen} from './util';
+import Loader from './loader.js';
+import {calculateScore} from "./calculate-score";
+import {INITIAL_GAME} from "./game-data";
 
 let gameData;
 export default class Application {
@@ -14,7 +16,11 @@ export default class Application {
     welcomeView.onStartGameButtonClick = () => {
       Application.showGame();
     };
-    fetch(`https://es.dump.academy/guess-melody/questions`).then(checkStatus).then((response) => response.json()).then((data) => (gameData = adaptServerData(data))).then(() => changeScreen(welcomeView.element)).catch(Application.showError);
+    if (gameData) {
+      changeScreen(welcomeView.element);
+    } else {
+      Loader.loadData().then((data) => (gameData = data)).then(() => changeScreen(welcomeView.element)).catch(Application.showError);
+    }
   }
 
   static showGame() {
@@ -24,11 +30,19 @@ export default class Application {
   }
 
   static showResult(resultModel, gameModel) {
-    const resultSuccessView = new ResultSuccessView(resultModel, gameModel);
-    resultSuccessView.onReStartGameButtonClick = () => {
-      Application.showGame();
-    };
-    changeScreen(resultSuccessView.element);
+    Loader.saveResults({
+      time: INITIAL_GAME.time - gameModel.time,
+      lives: gameModel.lives,
+      scores: calculateScore(gameModel.responses, gameModel.lives)
+    }).then(() => {
+      Loader.loadResults().then((res) => {
+        const resultSuccessView = new ResultSuccessView(resultModel, gameModel, res);
+        resultSuccessView.onReStartGameButtonClick = () => {
+          Application.showGame();
+        };
+        changeScreen(resultSuccessView.element);
+      });
+    });
   }
 
   static showError(error) {

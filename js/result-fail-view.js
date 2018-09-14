@@ -8,7 +8,7 @@ export default class ResultFailView extends AbstractView {
     this.state = state;
   }
   get template() {
-    const text = resultDisplay([1, 2, 3, 4, 5], this.state);
+    const text = resultDisplay(this.state);
     return `<section class="result">
               <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
               <h2 class="result__title">${this.title}</h2>
