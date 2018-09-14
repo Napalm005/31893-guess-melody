@@ -11,6 +11,7 @@ export const resultDisplay = (userResult, usersResuts = []) => {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
   const userResultScores = calculateScore(userResult.responses, userResult.lives);
+  usersResutsAdapted.push(userResultScores);
   usersResutsAdapted.sort((a, b) => {
     return a - b;
   });
