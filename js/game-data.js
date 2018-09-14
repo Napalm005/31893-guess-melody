@@ -1,7 +1,7 @@
 export const INITIAL_GAME = Object.freeze({
   responses: [],
   lives: 3,
-  time: 1000 * 10 * 1,
+  time: 1000 * 60 * 5,
   level: 0,
   fastResponses: 0
 });
