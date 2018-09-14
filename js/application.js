@@ -16,7 +16,11 @@ export default class Application {
     welcomeView.onStartGameButtonClick = () => {
       Application.showGame();
     };
-    Loader.loadData().then((data) => (gameData = data)).then(() => changeScreen(welcomeView.element)).catch(Application.showError);
+    if (gameData) {
+      changeScreen(welcomeView.element);
+    } else {
+      Loader.loadData().then((data) => (gameData = data)).then(() => changeScreen(welcomeView.element)).catch(Application.showError);
+    }
   }
 
   static showGame() {

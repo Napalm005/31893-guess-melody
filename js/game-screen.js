@@ -4,6 +4,7 @@ import HeaderView from "./header";
 import GameGenreVeiw from "./game-genre-view";
 import GameArtistVeiw from "./game-artist-view";
 import ResultFailView from "./result-fail-view";
+import ModalConfirmView from "./modal-confirm-view";
 import Application from "./application";
 
 class GameScreen {
@@ -45,7 +46,14 @@ class GameScreen {
     const headerView = new HeaderView(this.model.state);
     game.replaceChild(headerView.element, this.header.element);
     headerView.onGameBackBtnClick = () => {
-      this.resetGame();
+      const modalConfirmView = new ModalConfirmView();
+      modalConfirmView.onOkBtnClick = () => {
+        this.resetGame();
+      };
+      modalConfirmView.onRejectButtonClick = () => {
+        document.querySelector(`.modal`).remove();
+      };
+      game.appendChild(modalConfirmView.element);
     };
     this.header = headerView;
   }
@@ -55,7 +63,14 @@ class GameScreen {
     const headerView = new HeaderView(this.model.state);
     game.insertBefore(this.header.element, game.firstChild);
     headerView.onGameBackBtnClick = () => {
-      this.resetGame();
+      const modalConfirmView = new ModalConfirmView();
+      modalConfirmView.onOkBtnClick = () => {
+        this.resetGame();
+      };
+      modalConfirmView.onRejectButtonClick = () => {
+        document.querySelector(`.modal`).remove();
+      };
+      game.appendChild(modalConfirmView.element);
     };
   }
 
