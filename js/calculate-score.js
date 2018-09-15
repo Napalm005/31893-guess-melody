@@ -1,3 +1,5 @@
+const MINIMAL_RESPONSES_QUANT = 10;
+
 export const calculateScore = (responseArr, lives) => {
   if (!Array.isArray(responseArr)) {
     throw new Error(`responseArr should be Array`);
@@ -17,7 +19,7 @@ export const calculateScore = (responseArr, lives) => {
     return totalScores - 2;
   }, 0);
 
-  if (responseArr.length < 3) {
+  if (responseArr.length < MINIMAL_RESPONSES_QUANT) {
     return -1;
   }
   return totalScore;

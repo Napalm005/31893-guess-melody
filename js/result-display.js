@@ -11,7 +11,9 @@ export const resultDisplay = (userResult, usersResuts = []) => {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
   const userResultScores = calculateScore(userResult.responses, userResult.lives);
-  usersResutsAdapted.push(userResultScores);
+  if (userResultScores === -1) {
+    return `Ответов меньше 10`;
+  }
   usersResutsAdapted.sort((a, b) => {
     return a - b;
   });

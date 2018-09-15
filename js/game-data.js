@@ -19,3 +19,5 @@ export const resultModel = {
 };
 
 export const TIME_LINE_RADIUS = 370;
+export const CRITICAL_TIME = 30000;
+export const FINISH_LEVEL = 10;

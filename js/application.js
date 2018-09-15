@@ -10,18 +10,28 @@ import {INITIAL_GAME} from "./game-data";
 
 let gameData;
 export default class Application {
+  static start() {
+    Application.load();
+  }
+
   static showWelcome() {
     const welcomeView = new WelcomeView();
     welcomeView.onStartGameButtonClick = () => {
       Application.showGame();
     };
+    changeScreen(welcomeView.element);
+  }
+
+  static async load() {
     if (gameData) {
-      changeScreen(welcomeView.element);
+      Application.showWelcome();
     } else {
-      Loader.loadData()
-        .then((data) => (gameData = data))
-        .then(() => changeScreen(welcomeView.element))
-        .catch(Application.showError);
+      try {
+        gameData = await Loader.loadData();
+        Application.showWelcome();
+      } catch (e) {
+        Application.showError(e);
+      }
     }
   }
 
@@ -31,20 +41,19 @@ export default class Application {
     gameScreen.startGame();
   }
 
-  static showResult(resultModel, gameModel) {
-    Loader.saveResults({
-      time: INITIAL_GAME.time - gameModel.time,
-      lives: gameModel.lives,
-      scores: calculateScore(gameModel.responses, gameModel.lives)
-    }).then(() => {
-      Loader.loadResults().then((res) => {
-        const resultSuccessView = new ResultSuccessView(resultModel, gameModel, res);
-        resultSuccessView.onReStartGameButtonClick = () => {
-          Application.showGame();
-        };
-        changeScreen(resultSuccessView.element);
-      });
-    });
+  static async showResult(resultModel, gameModel) {
+    const dataToSendToServer = {time: INITIAL_GAME.time - gameModel.time, lives: gameModel.lives, scores: calculateScore(gameModel.responses, gameModel.lives)};
+
+    try {
+      await Loader.saveResults(dataToSendToServer);
+      const resultSuccessView = new ResultSuccessView(resultModel, gameModel, await Loader.loadResults());
+      resultSuccessView.onReStartGameButtonClick = () => {
+        Application.showGame();
+      };
+      changeScreen(resultSuccessView.element);
+    } catch (e) {
+      Application.showError(e);
+    }
   }
 
   static showError(error) {
