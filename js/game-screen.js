@@ -1,6 +1,6 @@
 import {resultModel} from "./game-data";
 import {getRadius} from "./get-radius";
-import {INITIAL_GAME, TIME_LINE_RADIUS} from "./game-data";
+import {INITIAL_GAME, TIME_LINE_RADIUS, CRITICAL_TIME, FINISH_LEVEL} from "./game-data";
 import {changeScreen} from "./util";
 import HeaderView from "./header";
 import GameGenreVeiw from "./game-genre-view";
@@ -118,7 +118,7 @@ class GameScreen {
   checkResponse(correct, time) {
     if (correct) {
       this.model.setResponse({result: true, time});
-      if (time < 30000) {
+      if (time < CRITICAL_TIME) {
         this.model.makeFastResponse();
       }
     } else {
@@ -135,7 +135,7 @@ class GameScreen {
       };
       this.stopTimer();
       changeScreen(failTries.element);
-    } else if (this.model.state.level > 8) {
+    } else if (this.model.state.level === FINISH_LEVEL - 1) {
       this.stopTimer();
       Application.showResult(resultModel.success, this.model.state);
     } else {

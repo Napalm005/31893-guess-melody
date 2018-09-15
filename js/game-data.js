@@ -1,7 +1,7 @@
 export const INITIAL_GAME = Object.freeze({
   responses: [],
   lives: 3,
-  time: 1000 * 60,
+  time: 1000 * 60 * 5,
   level: 0,
   fastResponses: 0
 });
@@ -19,3 +19,5 @@ export const resultModel = {
 };
 
 export const TIME_LINE_RADIUS = 370;
+export const CRITICAL_TIME = 30000;
+export const FINISH_LEVEL = 10;
