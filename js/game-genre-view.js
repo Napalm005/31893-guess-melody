@@ -61,7 +61,7 @@ export default class GameGenreView extends AbstractView {
         }
         toggleClass(e.target, `track__button--play`, `track__button--pause`);
       } else if (e.target.classList.contains(`game__input`)) {
-        this.isChecked();
+        this._isChecked();
       }
     });
   }
@@ -76,7 +76,7 @@ export default class GameGenreView extends AbstractView {
     return correctCheck;
   }
 
-  isChecked() {
+  _isChecked() {
     this.submitButton.disabled = !document.querySelectorAll(`.game__input:checked`).length;
   }
 
