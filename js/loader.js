@@ -14,20 +14,22 @@ const checkStatus = (response) => {
 const toJSON = (res) => res.json();
 
 export default class Loader {
-  static loadData() {
-    return fetch(`${SERVER_URL}/questions`)
-      .then(checkStatus)
-      .then(toJSON)
-      .then(adaptServerData);
+  static async loadData() {
+    const questiunsData = await fetch(`${SERVER_URL}/questions`);
+    const checkedQuestiunsData = await (checkStatus(questiunsData));
+    const parseredQuestiunsData = await (toJSON(checkedQuestiunsData));
+    const adaptedQuestiunsData = await (adaptServerData(parseredQuestiunsData));
+    return adaptedQuestiunsData;
   }
 
-  static loadResults() {
-    return fetch(`${SERVER_URL}/stats/${APP_ID}`)
-      .then(checkStatus)
-      .then(toJSON);
+  static async loadResults() {
+    const usersStatistic = await fetch(`${SERVER_URL}/stats/${APP_ID}`);
+    const checkedUsersStatistic = await (checkStatus(usersStatistic));
+    const parseredUsersStatistic = await (toJSON(checkedUsersStatistic));
+    return parseredUsersStatistic;
   }
 
-  static saveResults(data) {
+  static async saveResults(data) {
     data = Object.assign(data);
     const requestSettings = {
       body: JSON.stringify(data),
@@ -36,6 +38,8 @@ export default class Loader {
       },
       method: `POST`
     };
-    return fetch(`${SERVER_URL}/stats/${APP_ID}`, requestSettings).then(checkStatus);
+    const userStatistic = await fetch(`${SERVER_URL}/stats/${APP_ID}`, requestSettings);
+    const checkedUserStatistic = await (checkStatus(userStatistic));
+    return checkedUserStatistic;
   }
 }
