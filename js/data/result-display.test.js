@@ -68,9 +68,45 @@ describe(`resultDisplay`, () => {
       time: 1000 * 60 * 2,
       level: 0,
       fastResponses: 0
-    }, [{scores: 1}, {scores: 2}, {scores: 3}, {scores: 4}, {scores: 5}, {scores: 5}, {scores: 6}, {scores: 8}, {scores: 9}]), `Вы заняли 1 место из 10 игроков. Это лучше, чем у 90% игроков`);
+    }, [{scores: 1}, {scores: 2}, {scores: 3}, {scores: 4}, {scores: 5}, {scores: 5}, {scores: 6}, {scores: 8}, {scores: 9}, {scores: 10}]), `Вы заняли 1 место из 10 игроков. Это лучше, чем у 90% игроков`);
     assert.equal(resultDisplay({
       responses: [
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
         {
           result: true,
           time: 40000
@@ -80,23 +116,47 @@ describe(`resultDisplay`, () => {
       time: 1000 * 60 * 2,
       level: 0,
       fastResponses: 0
-    }, [{scores: 2}, {scores: 2}, {scores: 3}, {scores: 4}, {scores: 5}]), `Вы заняли 6 место из 6 игроков. Это лучше, чем у 0% игроков`);
+    }, [{scores: 14}, {scores: 14}, {scores: 13}, {scores: 14}, {scores: 15}, {scores: 10}]), `Вы заняли 6 место из 6 игроков. Это лучше, чем у 0% игроков`);
     assert.equal(resultDisplay({
       responses: [
         {
           result: true,
-          time: 20000
+          time: 40000
         },
         {
           result: true,
-          time: 20000
+          time: 40000
         },
         {
           result: true,
-          time: 20000
+          time: 40000
         },
         {
           result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: false,
           time: 40000
         }
       ],
@@ -104,9 +164,45 @@ describe(`resultDisplay`, () => {
       time: 1000 * 60 * 2,
       level: 0,
       fastResponses: 0
-    }, [{scores: 1}, {scores: 2}, {scores: 4}, {scores: 6}, {scores: 1}, {scores: 4}, {scores: 8}, {scores: 1}, {scores: 2}]), `Вы заняли 2 место из 10 игроков. Это лучше, чем у 80% игроков`);
+    }, [{scores: 1}, {scores: 2}, {scores: 4}, {scores: 6}, {scores: 1}, {scores: 4}, {scores: 18}, {scores: 1}, {scores: 2}, {scores: 7}]), `Вы заняли 2 место из 10 игроков. Это лучше, чем у 80% игроков`);
     assert.equal(resultDisplay({
       responses: [
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
+        {
+          result: true,
+          time: 40000
+        },
         {
           result: true,
           time: 40000
@@ -115,9 +211,37 @@ describe(`resultDisplay`, () => {
       lives: 2,
       scores: 10,
       time: 1000 * 60 * 2
-    }, []), `Вы заняли 1 место из 1 игрока. Это лучше, чем у 0% игроков`);
+    }, [{scores: 10}]), `Вы заняли 1 место из 1 игрока. Это лучше, чем у 0% игроков`);
     assert.equal(resultDisplay({
       responses: [
+        {
+          result: true,
+          time: 20000
+        }
+      ],
+      lives: 2,
+      scores: 10,
+      time: 1000 * 60 * 2,
+      fastResponses: 0
+    }, [{scores: 1}]), `Ответов меньше 10`);
+    assert.equal(resultDisplay({
+      responses: [
+        {
+          result: true,
+          time: 20000
+        },
+        {
+          result: true,
+          time: 20000
+        },
+        {
+          result: true,
+          time: 20000
+        },
+        {
+          result: true,
+          time: 20000
+        },
         {
           result: true,
           time: 20000
@@ -147,38 +271,6 @@ describe(`resultDisplay`, () => {
       scores: 10,
       time: 1000 * 60 * 2,
       fastResponses: 0
-    }, [{scores: 1}, {scores: 2}, {scores: 4}, {scores: 6}, {scores: 1}, {scores: 4}, {scores: 8}, {scores: 1}, {scores: 2}, {scores: 1}]), `Вы заняли 1 место из 11 игроков. Это лучше, чем у 91% игроков`);
-    assert.equal(resultDisplay({
-      responses: [
-        {
-          result: true,
-          time: 20000
-        },
-        {
-          result: true,
-          time: 20000
-        },
-        {
-          result: true,
-          time: 20000
-        },
-        {
-          result: true,
-          time: 20000
-        },
-        {
-          result: true,
-          time: 20000
-        },
-        {
-          result: true,
-          time: 20000
-        }
-      ],
-      lives: 2,
-      scores: 10,
-      time: 1000 * 60 * 2,
-      fastResponses: 0
-    }, [{scores: 1}, {scores: 2}, {scores: 4}, {scores: 6}, {scores: 1}, {scores: 4}, {scores: 8}, {scores: 1}, {scores: 2}, {scores: 1}, {scores: 1}, {scores: 2}, {scores: 4}, {scores: 6}, {scores: 1}, {scores: 4}, {scores: 8}, {scores: 1}, {scores: 2}, {scores: 1}]), `Вы заняли 1 место из 21 игрока. Это лучше, чем у 95% игроков`);
+    }, [{scores: 20}, {scores: 1}, {scores: 2}, {scores: 4}, {scores: 6}, {scores: 1}, {scores: 4}, {scores: 8}, {scores: 1}, {scores: 2}, {scores: 1}, {scores: 1}, {scores: 2}, {scores: 4}, {scores: 6}, {scores: 1}, {scores: 4}, {scores: 8}, {scores: 1}, {scores: 2}, {scores: 1}]), `Вы заняли 1 место из 21 игрока. Это лучше, чем у 95% игроков`);
   });
 });

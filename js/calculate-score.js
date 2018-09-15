@@ -17,7 +17,7 @@ export const calculateScore = (responseArr, lives) => {
     return totalScores - 2;
   }, 0);
 
-  if (responseArr.length < 3) {
+  if (responseArr.length < 10) {
     return -1;
   }
   return totalScore;
