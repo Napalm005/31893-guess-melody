@@ -19,7 +19,7 @@ export default class HeaderView extends AbstractView {
                         style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"/>
               </svg>
             
-              <div class="timer__value" xmlns="http://www.w3.org/1999/xhtml">
+              <div class="timer__value" xmlns="http://www.w3.org/1999/xhtml" style="${this.time < 30000 ? `color: red` : ``}">
                 <span class="timer__mins">${(`0` + parseInt(this.time / 60 / 1000, 10)).slice(-2)}</span>
                 <span class="timer__dots">:</span>
                 <span class="timer__secs">${(`0` + parseInt((this.time / 1000) % 60, 10)).slice(-2)}</span>
