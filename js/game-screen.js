@@ -135,7 +135,7 @@ class GameScreen {
       };
       this.stopTimer();
       changeScreen(failTries.element);
-    } else if (this.model.state.level > 3) {
+    } else if (this.model.state.level > 8) {
       this.stopTimer();
       Application.showResult(resultModel.success, this.model.state);
     } else {
