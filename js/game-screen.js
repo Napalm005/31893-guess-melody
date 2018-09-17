@@ -49,16 +49,8 @@ class GameScreen {
     const timerLine = headerView.element.querySelector(`.timer__line`);
 
     game.replaceChild(headerView.element, this.header.element);
-    headerView.onGameBackBtnClick = () => {
-      const modalConfirmView = new ModalConfirmView();
-      modalConfirmView.onOkBtnClick = () => {
-        this.resetGame();
-      };
-      modalConfirmView.onRejectButtonClick = () => {
-        document.querySelector(`.modal`).remove();
-      };
-      game.appendChild(modalConfirmView.element);
-    };
+    headerView.onGameBackBtnClick = () => this._onGameBackBtnClick(game);
+
     timerLine.setAttribute(`stroke-dasharray`, getRadius(this.model.state.time / INITIAL_GAME.time, TIME_LINE_RADIUS).stroke);
     timerLine.setAttribute(`stroke-dashoffset`, getRadius(this.model.state.time / INITIAL_GAME.time, TIME_LINE_RADIUS).offset);
     this.header = headerView;
@@ -68,7 +60,11 @@ class GameScreen {
     const game = document.querySelector(`.game`);
     const headerView = new HeaderView(this.model.state);
     game.insertBefore(this.header.element, game.firstChild);
-    headerView.onGameBackBtnClick = () => {
+    headerView.onGameBackBtnClick = () => this._onGameBackBtnClick(game);
+  }
+
+  _onGameBackBtnClick(game) {
+    if (!document.querySelector(`.modal`)) {
       const modalConfirmView = new ModalConfirmView();
       modalConfirmView.onOkBtnClick = () => {
         this.resetGame();
@@ -77,7 +73,7 @@ class GameScreen {
         document.querySelector(`.modal`).remove();
       };
       game.appendChild(modalConfirmView.element);
-    };
+    }
   }
 
   changeLevel() {
