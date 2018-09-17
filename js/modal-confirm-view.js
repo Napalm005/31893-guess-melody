@@ -16,9 +16,9 @@ export default class ModalConfirmView extends AbstractView {
   bind() {
     const modal = this.element.querySelector(`.modal`);
     modal.addEventListener(`click`, (evt) => {
-      if (e.target.dataset.id === `ok`) {
+      if (evt.target.dataset.id === `ok`) {
         this.onOkBtnClick();
-      } else if (e.target.dataset.id === `reject`) {
+      } else if (evt.target.dataset.id === `reject`) {
         this.onRejectButtonClick();
       }
     });

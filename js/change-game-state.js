@@ -27,14 +27,14 @@ export const nextLevel = (state) => {
 };
 
 export const updateClock = (state) => {
-  let time = state.time - 1000;
+  const time = state.time - 1000;
   return Object.assign({}, state, {
     time
   });
 };
 
 export const makeFastResponse = (state) => {
-  let fastResponses = state.fastResponses + 1;
+  const fastResponses = state.fastResponses + 1;
   return Object.assign({}, state, {
     fastResponses
   });

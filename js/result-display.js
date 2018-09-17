@@ -18,7 +18,7 @@ export const resultDisplay = (userResult, usersResuts = []) => {
     return a - b;
   });
   const userIndex = usersResutsAdapted.indexOf(userResultScores);
-  let successPercent = (userIndex / usersResutsAdapted.length) * 100;
-  let number = declOfNum(usersResutsAdapted.length, [`игрока`, `игроков`, `игроков`]);
+  const successPercent = (userIndex / usersResutsAdapted.length) * 100;
+  const number = declOfNum(usersResutsAdapted.length, [`игрока`, `игроков`, `игроков`]);
   return `Вы заняли ${usersResutsAdapted.length - userIndex} место из ${usersResutsAdapted.length} ${number}. Это лучше, чем у ${Math.round(successPercent)}% игроков`;
 };

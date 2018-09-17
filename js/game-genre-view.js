@@ -38,7 +38,7 @@ export default class GameGenreView extends AbstractView {
   bind() {
     this.submitButton = this.element.querySelector(`.game__submit`);
     this.submitButton.addEventListener(`click`, (evt) => {
-      e.preventDefault();
+      evt.preventDefault();
       this.onResponseSubmit();
     });
 
@@ -49,18 +49,18 @@ export default class GameGenreView extends AbstractView {
     this.element.querySelector(`audio`).play();
 
     gameTracks.addEventListener(`click`, (evt) => {
-      if (e.target.classList.contains(`track__button`)) {
+      if (evt.target.classList.contains(`track__button`)) {
         pauseAudioPlaying();
-        if (e.target.classList.contains(`track__button--play`)) {
+        if (evt.target.classList.contains(`track__button--play`)) {
           if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
             toggleClass(gameTracks.querySelector(`.track__button--pause`), `track__button--pause`, `track__button--play`);
           }
-          e.target.nextElementSibling.querySelector(`audio`).play();
+          evt.target.nextElementSibling.querySelector(`audio`).play();
         } else {
-          e.target.nextElementSibling.querySelector(`audio`).pause();
+          evt.target.nextElementSibling.querySelector(`audio`).pause();
         }
-        toggleClass(e.target, `track__button--play`, `track__button--pause`);
-      } else if (e.target.classList.contains(`game__input`)) {
+        toggleClass(evt.target, `track__button--play`, `track__button--pause`);
+      } else if (evt.target.classList.contains(`game__input`)) {
         this._isChecked();
       }
     });

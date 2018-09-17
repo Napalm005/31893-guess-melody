@@ -45,7 +45,7 @@ export default class GameArtistView extends AbstractView {
     audio.play();
 
     trackButton.addEventListener(`click`, (evt) => {
-      if (e.target.classList.contains(`track__button--play`)) {
+      if (evt.target.classList.contains(`track__button--play`)) {
         audio.play();
       } else {
         pauseAudioPlaying();

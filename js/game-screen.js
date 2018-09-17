@@ -82,7 +82,7 @@ class GameScreen {
         const gameGenre = new GameGenreVeiw(this.model.level);
         gameGenre.onResponseSubmit = () => {
           this.pauseAudioPlaying();
-          let correctCheck = gameGenre.checkGenreResponse();
+          const correctCheck = gameGenre.checkGenreResponse();
           const spendTime = this._beginTime - this.model.state.time;
           this.checkResponse(correctCheck, spendTime);
           gameGenre.submitButton.disabled = true;
@@ -99,7 +99,7 @@ class GameScreen {
         const gameArtist = new GameArtistVeiw(this.model.level);
         gameArtist.onResponseCheck = (evt) => {
           this.pauseAudioPlaying();
-          let correctCheck = gameArtist.checkArtistResponse(e.target);
+          const correctCheck = gameArtist.checkArtistResponse(evt.target);
           const spendTime = this._beginTime - this.model.state.time;
           this.checkResponse(correctCheck, spendTime);
           this.checkGameContinue(this.model.state);
