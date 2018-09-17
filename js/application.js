@@ -29,8 +29,8 @@ export default class Application {
       try {
         gameData = await Loader.loadData();
         Application.showWelcome();
-      } catch (e) {
-        Application.showError(e);
+      } catch (evt) {
+        Application.showError(evt);
       }
     }
   }
@@ -51,8 +51,8 @@ export default class Application {
         Application.showGame();
       };
       changeScreen(resultSuccessView.element);
-    } catch (e) {
-      Application.showError(e);
+    } catch (evt) {
+      Application.showError(evt);
     }
   }
 

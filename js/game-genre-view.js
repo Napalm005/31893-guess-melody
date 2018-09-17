@@ -37,7 +37,7 @@ export default class GameGenreView extends AbstractView {
 
   bind() {
     this.submitButton = this.element.querySelector(`.game__submit`);
-    this.submitButton.addEventListener(`click`, (e) => {
+    this.submitButton.addEventListener(`click`, (evt) => {
       e.preventDefault();
       this.onResponseSubmit();
     });
@@ -48,7 +48,7 @@ export default class GameGenreView extends AbstractView {
     toggleClass(trackButton, `track__button--play`, `track__button--pause`);
     this.element.querySelector(`audio`).play();
 
-    gameTracks.addEventListener(`click`, (e) => {
+    gameTracks.addEventListener(`click`, (evt) => {
       if (e.target.classList.contains(`track__button`)) {
         pauseAudioPlaying();
         if (e.target.classList.contains(`track__button--play`)) {

@@ -97,7 +97,7 @@ class GameScreen {
         break;
       case `artist`:
         const gameArtist = new GameArtistVeiw(this.model.level);
-        gameArtist.onResponseCheck = (e) => {
+        gameArtist.onResponseCheck = (evt) => {
           this.pauseAudioPlaying();
           let correctCheck = gameArtist.checkArtistResponse(e.target);
           const spendTime = this._beginTime - this.model.state.time;
