@@ -46,7 +46,9 @@ export default class GameGenreView extends AbstractView {
     const trackButton = gameTracks.querySelector(`.track__button`);
 
     toggleClass(trackButton, `track__button--play`, `track__button--pause`);
-    this.element.querySelector(`audio`).play();
+
+    let playPromise = this.element.querySelector(`audio`).play();
+    this._play(playPromise);
 
     gameTracks.addEventListener(`click`, (evt) => {
       if (evt.target.classList.contains(`track__button`)) {
@@ -55,7 +57,8 @@ export default class GameGenreView extends AbstractView {
           if (gameTracks.querySelectorAll(`.track__button--pause`).length) {
             toggleClass(gameTracks.querySelector(`.track__button--pause`), `track__button--pause`, `track__button--play`);
           }
-          evt.target.nextElementSibling.querySelector(`audio`).play();
+          playPromise = evt.target.nextElementSibling.querySelector(`audio`).play();
+          this._play(playPromise);
         } else {
           evt.target.nextElementSibling.querySelector(`audio`).pause();
         }
@@ -74,6 +77,12 @@ export default class GameGenreView extends AbstractView {
       }
     });
     return correctCheck;
+  }
+
+  _play(playPromise) {
+    if (playPromise !== undefined) {
+      playPromise.then((_) => {}).catch(() => {});
+    }
   }
 
   _isChecked() {

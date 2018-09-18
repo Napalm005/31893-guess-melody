@@ -42,11 +42,13 @@ export default class GameArtistView extends AbstractView {
     const audio = this.element.querySelector(`audio`);
 
     toggleClass(trackButton, `track__button--play`, `track__button--pause`);
-    audio.play();
+
+    const playPromise = audio.play();
+    this._play(playPromise);
 
     trackButton.addEventListener(`click`, (evt) => {
       if (evt.target.classList.contains(`track__button--play`)) {
-        audio.play();
+        this._play(playPromise);
       } else {
         pauseAudioPlaying();
       }
@@ -62,6 +64,12 @@ export default class GameArtistView extends AbstractView {
 
   checkArtistResponse(response) {
     return response.value === this.artist;
+  }
+
+  _play(playPromise) {
+    if (playPromise !== undefined) {
+      playPromise.then((_) => {}).catch(() => {});
+    }
   }
 
   onResponseCheck() {}
